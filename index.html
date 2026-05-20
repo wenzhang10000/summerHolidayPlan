@@ -1,11 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>如何帮孩子过个充实的暑假？最全、最实用的暑假计划指南</title>
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- jsPDF for PDF generation -->
@@ -13,438 +11,991 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <!-- SheetJS for Excel export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- html2canvas for Chinese text rendering in PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -32px;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: #3b82f6;
-        }
-        
-        .timeline-connector::after {
-            content: '';
-            position: absolute;
-            left: -25px;
-            top: 16px;
-            width: 2px;
-            height: calc(100% - 16px);
-            background-color: #e5e7eb;
-        }
-        
-        .dark .timeline-connector::after {
-            background-color: #4b5563;
+        /* ===== CSS Variables & Design System ===== */
+        :root {
+            --bg-primary: #f5f5f7;
+            --bg-card: #ffffff;
+            --bg-secondary: #fafafa;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #aeaeb2;
+            --accent: #007AFF;
+            --accent-hover: #0066d6;
+            --green: #34C759;
+            --orange: #FF9500;
+            --purple: #AF52DE;
+            --pink: #FF2D55;
+            --teal: #5AC8FA;
+            --border: #e5e5ea;
+            --border-light: #f0f0f3;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+            --shadow-lg: 0 2px 8px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.06);
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-full: 980px;
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .dark {
+            --bg-primary: #1c1c1e;
+            --bg-card: #2c2c2e;
+            --bg-secondary: #242426;
+            --text-primary: #f5f5f7;
+            --text-secondary: #aeaeb2;
+            --text-tertiary: #636366;
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+            --shadow-md: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+            --shadow-lg: 0 2px 8px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        /* ===== Reset & Base ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-stack);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* ===== Layout ===== */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== Typography ===== */
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-align: center;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* ===== Card ===== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            transition: box-shadow var(--transition), transform var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .card-flat {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ===== Icon Circle ===== */
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .icon-circle.blue   { background: #e8f2ff; color: var(--accent); }
+        .icon-circle.green  { background: #e6f9ed; color: var(--green); }
+        .icon-circle.orange { background: #fff3e6; color: var(--orange); }
+        .icon-circle.purple { background: #f3e6f9; color: var(--purple); }
+        .icon-circle.pink   { background: #ffe6ea; color: var(--pink); }
+        .icon-circle.teal   { background: #e6f7fd; color: #0099cc; }
+
+        .dark .icon-circle.blue   { background: #1a2d4a; }
+        .dark .icon-circle.green  { background: #1a3a24; }
+        .dark .icon-circle.orange { background: #3a2a1a; }
+        .dark .icon-circle.purple { background: #2a1a3a; }
+        .dark .icon-circle.pink   { background: #3a1a22; }
+        .dark .icon-circle.teal   { background: #1a2a33; }
+
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-stack);
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 28px;
+            border-radius: var(--radius-full);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 2px 8px rgba(0,122,255,0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-white {
+            background: #fff;
+            color: var(--accent);
+            border: 1.5px solid transparent;
+        }
+        .btn-white:hover {
+            background: #f0f0f3;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 0 56px;
+            text-align: center;
+        }
+        .header-badge {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            background: #e8f2ff;
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            margin-bottom: 24px;
+            letter-spacing: 0.02em;
+        }
+        .dark .header-badge { background: #1a2d4a; }
+        .header h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .header-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== Section ===== */
+        .section {
+            padding: 64px 0;
+        }
+        .section + .section {
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== Highlight Card ===== */
+        .highlight-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+        .highlight-card .icon-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .highlight-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* ===== Principle Grid ===== */
+        .principle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .principle-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow var(--transition), transform var(--transition);
+        }
+        .principle-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .principle-card .icon-circle { margin-bottom: 18px; }
+        .principle-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+        .principle-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ===== Timeline ===== */
+        .timeline { position: relative; padding-left: 36px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 4px;
+            bottom: 4px;
+            width: 2px;
+            background: var(--border);
+            border-radius: 1px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 36px;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-dot {
+            position: absolute;
+            left: -29px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--bg-card), 0 0 0 6px rgba(0,122,255,0.15);
+        }
+        .timeline-stage-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .timeline-stage-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .timeline-badge {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--accent);
+            background: #e8f2ff;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+        }
+        .dark .timeline-badge { background: #1a2d4a; }
+        .timeline-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .timeline-row i {
+            width: 18px;
+            text-align: center;
+            color: var(--accent);
+            font-size: 13px;
+        }
+        .timeline-row strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* ===== Area Grid ===== */
+        .area-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .area-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow var(--transition), transform var(--transition);
+        }
+        .area-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .area-card-strip {
+            height: 4px;
+        }
+        .area-card-strip.blue   { background: var(--accent); }
+        .area-card-strip.green  { background: var(--green); }
+        .area-card-strip.orange { background: var(--orange); }
+        .area-card-strip.purple { background: var(--purple); }
+        .area-card-strip.pink   { background: var(--pink); }
+        .area-card-strip.teal   { background: var(--teal); }
+        .area-card-body {
+            padding: 24px;
+            text-align: center;
+        }
+        .area-card-body .icon-circle {
+            margin: 0 auto 14px;
+        }
+        .area-card-body h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .area-card-body p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== CTA Banner ===== */
+        .cta-banner {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 48px 32px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+        .cta-banner h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+        }
+        .cta-banner p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            max-width: 460px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== Download Modal ===== */
         .download-modal {
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 24px;
         }
-
         .download-modal.active {
             opacity: 1;
             pointer-events: auto;
         }
+        .modal-sheet {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            max-width: 400px;
+            width: 100%;
+            padding: 28px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .download-modal:not(.active) .modal-sheet {
+            transform: translateY(20px);
+        }
+        .modal-sheet h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .modal-sheet > p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .modal-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font-stack);
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        .modal-option:hover {
+            border-color: var(--accent);
+            background: #e8f2ff;
+        }
+        .dark .modal-option:hover { background: #1a2d4a; }
+        .modal-option .opt-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .modal-option .opt-icon.excel  { background: #e6f9ed; color: var(--green); }
+        .modal-option .opt-icon.image  { background: #e8f2ff; color: var(--accent); }
+        .modal-option .opt-icon.pdf    { background: #ffe6ea; color: var(--pink); }
+        .dark .modal-option .opt-icon.excel  { background: #1a3a24; }
+        .dark .modal-option .opt-icon.image  { background: #1a2d4a; }
+        .dark .modal-option .opt-icon.pdf    { background: #3a1a22; }
+        .modal-option .opt-label {
+            flex: 1;
+            text-align: left;
+            font-weight: 500;
+        }
+        .modal-option .opt-arrow {
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+        .modal-hint {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-top: 16px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            transition: all var(--transition);
+        }
+        .modal-close:hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 48px 0;
+            text-align: center;
+        }
+        .footer h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+        }
+        .footer .footer-accent {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 32px;
+        }
+        .footer-share {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .footer-share button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-share button:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .footer small {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* ===== Theme Toggle ===== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+            z-index: 100;
+        }
+        .theme-toggle:hover {
+            box-shadow: var(--shadow-lg);
+            color: var(--text-primary);
+        }
+        .dark .theme-toggle .fa-sun    { display: inline-block; }
+        .dark .theme-toggle .fa-moon   { display: none; }
+        .theme-toggle .fa-sun          { display: none; }
+        .theme-toggle .fa-moon         { display: inline-block; }
+
+        /* ===== Animations ===== */
+        .fade-in {
+            animation: fadeIn 0.7s ease-out both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 640px) {
+            .header h1 { font-size: 30px; }
+            .header p   { font-size: 17px; }
+            .section-title { font-size: 24px; }
+            .principle-grid { grid-template-columns: 1fr; }
+            .area-grid { grid-template-columns: 1fr 1fr; }
+            .timeline { padding-left: 28px; }
+            .timeline-dot { left: -23px; }
+            .timeline::before { left: 13px; }
+            .container { padding: 0 16px; }
+            .section { padding: 48px 0; }
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-    <!-- 下载模态框 -->
-    <div id="downloadModal" class="download-modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6">
-            <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">下载暑假计划模板</h3>
-                <button id="closeModal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <p class="text-gray-700 dark:text-gray-300 mb-6">请选择您需要的模板格式：</p>
-            <div class="space-y-3">
-              
-                <button id="downloadExcel" class="w-full flex items-center justify-between bg-green-100 hover:bg-green-200 dark:bg-green-900 dark:hover:bg-green-800 text-green-600 dark:text-green-200 px-4 py-3 rounded-lg transition-colors">
-                    <div class="flex items-center">
-                        <i class="fas fa-file-excel text-xl mr-3"></i>
-                        <span>Excel格式</span>
-                    </div>
-                    <i class="fas fa-download"></i>
-                </button>
+<body>
+    <!-- 下载模态框 — iOS Sheet 风格 -->
+    <div id="downloadModal" class="download-modal">
+        <div class="modal-sheet" style="position: relative;">
+            <button id="closeModal" class="modal-close"><i class="fas fa-times"></i></button>
+            <h3>下载暑假计划模板</h3>
+            <p>请选择您需要的模板格式</p>
 
-                <button id="downloadImage" class="w-full flex items-center justify-between bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-600 dark:text-blue-200 px-4 py-3 rounded-lg transition-colors">
-                    <div class="flex items-center">
-                        <i class="fas fa-image text-xl mr-3"></i>
-                        <span>图片格式</span>
-                    </div>
-                    <i class="fas fa-download"></i>
-                </button>
-
-            <button id="downloadPDF" class="w-full flex items-center justify-between bg-red-100 hover:bg-red-200 dark:bg-red-900 dark:hover:bg-red-800 text-red-600 dark:text-red-200 px-4 py-3 rounded-lg transition-colors">
-                <div class="flex items-center">
-                    <i class="fas fa-file-pdf text-xl mr-3"></i>
-                    <span>PDF格式</span>
-                </div>
-                <i class="fas fa-download"></i>
+            <button id="downloadExcel" class="modal-option">
+                <span class="opt-icon excel"><i class="fas fa-file-excel"></i></span>
+                <span class="opt-label">Excel 格式</span>
+                <span class="opt-arrow"><i class="fas fa-chevron-right"></i></span>
             </button>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">* PDF格式适合打印，Excel格式可编辑，图片格式适合手机查看</p>
+
+            <button id="downloadImage" class="modal-option">
+                <span class="opt-icon image"><i class="fas fa-image"></i></span>
+                <span class="opt-label">图片格式</span>
+                <span class="opt-arrow"><i class="fas fa-chevron-right"></i></span>
+            </button>
+
+            <button id="downloadPDF" class="modal-option">
+                <span class="opt-icon pdf"><i class="fas fa-file-pdf"></i></span>
+                <span class="opt-label">PDF 格式</span>
+                <span class="opt-arrow"><i class="fas fa-chevron-right"></i></span>
+            </button>
+
+            <p class="modal-hint">PDF 适合打印，Excel 可编辑，图片适合手机查看</p>
         </div>
     </div>
 
-    <header class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
-        <div class="max-w-4xl mx-auto fade-in">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">如何帮孩子过个充实的暑假？</h1>
-            <p class="text-xl sm:text-2xl opacity-90">最全、最实用的暑假计划指南</p>
-            <div class="mt-8 flex justify-center space-x-4">
-                <button class="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                    立即收藏
-                </button>
-                <button onclick="window.print()" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                    打印计划
-                </button>
+    <!-- Header -->
+    <header class="header">
+        <div class="container fade-in">
+            <div class="header-badge">暑假计划指南</div>
+            <h1>如何帮孩子过个<br>充实的暑假？</h1>
+            <p>最全、最实用的暑假计划指南</p>
+            <div class="header-actions">
+                <button class="btn btn-primary"><i class="far fa-bookmark"></i> 立即收藏</button>
+                <button onclick="window.print()" class="btn btn-outline"><i class="fas fa-print"></i> 打印计划</button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- 其他部分保持不变... -->
-        <section class="mb-16 fade-in">
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 mb-8 card-hover transition-all duration-300">
-                <h2 class="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-400">📌 为什么暑假计划如此重要？</h2>
-                <p class="mb-4 text-gray-700 dark:text-gray-300">暑假是一段比较漫长又重要的时间。有时候一个暑假过后，孩子的学习生活状态会发生巨大改变，因此暑期计划非常重要。</p>
-                <p class="text-gray-700 dark:text-gray-300">一份好的假期规划，可以让孩子在假期养成良好的学习生活习惯，合理规划时间，学点东西、做点有意思的事情，父母带娃也会轻松很多！</p>
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- 为什么重要 -->
+        <section class="section fade-in">
+            <div class="highlight-card">
+                <div class="icon-row">
+                    <span class="icon-circle blue"><i class="fas fa-lightbulb"></i></span>
+                    <h2>为什么暑假计划如此重要？</h2>
+                </div>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                    暑假是一段比较漫长又重要的时间。有时候一个暑假过后，孩子的学习生活状态会发生巨大改变，因此暑期计划非常重要。
+                </p>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 8px;">
+                    一份好的假期规划，可以让孩子在假期养成良好的学习生活习惯，合理规划时间，学点东西、做点有意思的事情，父母带娃也会轻松很多！
+                </p>
             </div>
         </section>
 
-        <section class="mb-16 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">✨ 四项基本原则</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-child text-blue-600 dark:text-blue-400 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">原则一：因人制宜</h3>
-                    <p class="text-gray-700 dark:text-gray-300">根据孩子特点制定计划。评估孩子优势和发展目标，按照实际情况来进行。</p>
+        <!-- 四项基本原则 -->
+        <section class="section fade-in">
+            <h2 class="section-title">四项基本原则</h2>
+            <p class="section-subtitle">制定计划的核心方针</p>
+            <div class="principle-grid">
+                <div class="principle-card">
+                    <div class="icon-circle blue"><i class="fas fa-user-check"></i></div>
+                    <h3>原则一：因人制宜</h3>
+                    <p>根据孩子特点制定计划。评估孩子优势和发展目标，按照实际情况来进行。</p>
                 </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-book text-blue-600 dark:text-blue-400 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">原则二：突出重点</h3>
-                    <p class="text-gray-700 dark:text-gray-300">学习计划要突出重点，不要平均用力。可咨询老师建议，纳入暑假计划。</p>
+                <div class="principle-card">
+                    <div class="icon-circle green"><i class="fas fa-bullseye"></i></div>
+                    <h3>原则二：突出重点</h3>
+                    <p>学习计划要突出重点，不要平均用力。可咨询老师建议，纳入暑假计划。</p>
                 </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-balance-scale text-blue-600 dark:text-blue-400 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">原则三：劳逸结合</h3>
-                    <p class="text-gray-700 dark:text-gray-300">学习时间、作业时间、体育活动、休闲娱乐交替安排。列出"心愿清单"。</p>
+                <div class="principle-card">
+                    <div class="icon-circle orange"><i class="fas fa-yin-yang"></i></div>
+                    <h3>原则三：劳逸结合</h3>
+                    <p>学习时间、作业时间、体育活动、休闲娱乐交替安排。列出"心愿清单"。</p>
                 </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-check-circle text-blue-600 dark:text-blue-400 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-blue-600 dark:text-blue-400">原则四：定期检查</h3>
-                    <p class="text-gray-700 dark:text-gray-300">按时按量检查计划完成情况，总结得失、找出偏差、分析原因，实现自我管理。</p>
+                <div class="principle-card">
+                    <div class="icon-circle purple"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>原则四：定期检查</h3>
+                    <p>按时按量检查计划完成情况，总结得失、找出偏差、分析原因，实现自我管理。</p>
                 </div>
             </div>
         </section>
 
-        <section class="mb-16 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">📅 三阶段暑期计划时间表</h2>
-            
-            <div class="relative">
-                <!-- 第一阶段 -->
-                <div class="timeline-item relative pl-12 pb-16">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">第一阶段：亲近自然好时机</h3>
-                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 text-sm font-medium px-3 py-1 rounded-full">暑假开始的前两周</span>
+        <!-- 三阶段时间表 -->
+        <section class="section fade-in">
+            <h2 class="section-title">三阶段暑期计划时间表</h2>
+            <p class="section-subtitle">循序渐进，科学安排整个假期</p>
+
+            <div class="card-flat">
+                <div class="timeline">
+
+                    <!-- 第一阶段 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-stage-header">
+                            <h3>第一阶段：亲近自然好时机</h3>
+                            <span class="timeline-badge">前两周</span>
                         </div>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-medium">主旋律：放松为主</p>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                    <span class="font-medium">拜访祖父母</span> - 去爷爷奶奶、外公外婆家玩一两个星期。孩子可以陪伴老人，同时适应不同生活环境，亲近自然。
-                                </p>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                    <i class="fas fa-plane"></i>
-                                </div>
-                                <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                    <span class="font-medium">亲子旅游</span> - 父母亲自带孩子出去旅游，加深亲子关系，拓展视野和见识。
-                                </p>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                    <i class="fas fa-campground"></i>
-                                </div>
-                                <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                    <span class="font-medium">夏令营活动</span> - 参加学校组织的夏令营活动，锻炼孩子独立生活和交际的能力。
-                                </p>
-                            </div>
+                        <p style="font-weight: 500; margin-bottom: 10px; font-size: 14px; color: var(--text-secondary);">主旋律：放松为主</p>
+                        <div class="timeline-body">
+                            <div class="timeline-row"><i class="fas fa-home"></i> <strong>拜访祖父母</strong> — 去爷爷奶奶、外公外婆家玩一两个星期，陪伴老人，亲近自然。</div>
+                            <div class="timeline-row"><i class="fas fa-plane"></i> <strong>亲子旅游</strong> — 父母亲自带孩子出去旅游，加深亲子关系，拓展视野和见识。</div>
+                            <div class="timeline-row"><i class="fas fa-campground"></i> <strong>夏令营活动</strong> — 参加学校组织的夏令营，锻炼孩子独立生活和交际的能力。</div>
                         </div>
                     </div>
-                    <div class="timeline-connector"></div>
-                </div>
-                
-                <!-- 第二阶段 -->
-                <div class="timeline-item relative pl-12 pb-16">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">第二阶段：查缺补漏好时机</h3>
-                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 text-sm font-medium px-3 py-1 rounded-full">暑假中期</span>
+
+                    <!-- 第二阶段 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-stage-header">
+                            <h3>第二阶段：查缺补漏好时机</h3>
+                            <span class="timeline-badge">中期</span>
                         </div>
-                        
-                        <div class="mb-6">
-                            <p class="text-gray-700 dark:text-gray-300 mb-4 font-medium">【学习篇】</p>
-                            <div class="space-y-4">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                    <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                        <span class="font-medium">制定作息表</span> - 父母和孩子一起制定暑期作息表，合理安排起床、睡觉、作业、娱乐时间。
-                                    </p>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                        <i class="fas fa-book-open"></i>
-                                    </div>
-                                    <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                        <span class="font-medium">完成暑假作业</span> - 玩好了就该好好学习，完成老师布置的暑假作业。
-                                    </p>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                        <i class="fas fa-paint-brush"></i>
-                                    </div>
-                                    <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                        <span class="font-medium">适当报兴趣班</span> - 适当报暑期兴趣班，培养孩子兴趣，找到一技之长。
-                                    </p>
-                                </div>
-                            </div>
+                        <p style="font-weight: 500; margin: 0 0 14px; font-size: 13px; color: var(--text-tertiary);">学习篇</p>
+                        <div class="timeline-body" style="margin-bottom: 14px;">
+                            <div class="timeline-row"><i class="fas fa-calendar-alt"></i> <strong>制定作息表</strong> — 和孩子一起制定暑期作息表，合理安排各项时间。</div>
+                            <div class="timeline-row"><i class="fas fa-book-open"></i> <strong>完成暑假作业</strong> — 玩好了就该好好学习，完成老师布置的暑假作业。</div>
+                            <div class="timeline-row"><i class="fas fa-paint-brush"></i> <strong>适当报兴趣班</strong> — 适当报暑期兴趣班，培养孩子兴趣，找到一技之长。</div>
                         </div>
-                        
-                        <div>
-                            <p class="text-gray-700 dark:text-gray-300 mb-4 font-medium">【生活篇】</p>
-                            <div class="space-y-4">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                        <i class="fas fa-broom"></i>
-                                    </div>
-                                    <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                        <span class="font-medium">做家务</span> - 力所能及地帮父母做家务，锻炼独立生活能力，提高责任心。
-                                    </p>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                        <i class="fas fa-book"></i>
-                                    </div>
-                                    <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                        <span class="font-medium">多读书</span> - 利用暑假时间培养阅读习惯。父母要以身作则，不要在孩子看书时玩手机。
-                                    </p>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                        <i class="fas fa-running"></i>
-                                    </div>
-                                    <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                        <span class="font-medium">户外锻炼</span> - 注意锻炼身体，有利于孩子的成长和身体健康。
-                                    </p>
-                                </div>
-                            </div>
+                        <p style="font-weight: 500; margin: 0 0 14px; font-size: 13px; color: var(--text-tertiary);">生活篇</p>
+                        <div class="timeline-body">
+                            <div class="timeline-row"><i class="fas fa-broom"></i> <strong>做家务</strong> — 力所能及地帮父母做家务，锻炼独立生活能力，提高责任心。</div>
+                            <div class="timeline-row"><i class="fas fa-book"></i> <strong>多读书</strong> — 利用暑假时间培养阅读习惯。父母要以身作则，不要在孩子看书时玩手机。</div>
+                            <div class="timeline-row"><i class="fas fa-running"></i> <strong>户外锻炼</strong> — 注意锻炼身体，有利于孩子的成长和身体健康。</div>
                         </div>
                     </div>
-                    <div class="timeline-connector"></div>
+
+                    <!-- 第三阶段 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-stage-header">
+                            <h3>第三阶段："收心"阶段</h3>
+                            <span class="timeline-badge">最后一周</span>
+                        </div>
+                        <p style="font-weight: 500; margin-bottom: 10px; font-size: 14px; color: var(--text-secondary);">主旋律：调整为主</p>
+                        <div class="timeline-body">
+                            <div class="timeline-row"><i class="fas fa-bed"></i> <strong>调整作息</strong> — 帮助孩子从假期愉悦轻松的氛围中脱离出来，帮孩子收心。</div>
+                            <div class="timeline-row"><i class="fas fa-graduation-cap"></i> <strong>预习新内容</strong> — 预习下一学期的课程，至少对大致的知识脉络有个基本了解。</div>
+                            <div class="timeline-row"><i class="fas fa-check-double"></i> <strong>检查暑假作业</strong> — 确保暑假作业完成，关系到孩子这个暑假能否完美收官。</div>
+                        </div>
+                    </div>
+
                 </div>
-                
-                <!-- 第三阶段 -->
-                <div class="timeline-item relative pl-12">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6 card-hover transition-all duration-300">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">第三阶段："收心"阶段</h3>
-                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 text-sm font-medium px-3 py-1 rounded-full">暑假最后一周</span>
-                        </div>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4 font-medium">主旋律：调整为主</p>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                    <i class="fas fa-bed"></i>
-                                </div>
-                                <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                    <span class="font-medium">调整作息</span> - 帮助孩子从假期愉悦轻松的氛围中脱离出来，调整作息时间，帮孩子收心。
-                                </p>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </div>
-                                <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                    <span class="font-medium">预习新内容</span> - 预习下一学期的课程，至少对大致的知识脉络有个基本了解。
-                                </p>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-600 dark:text-blue-400 mt-1">
-                                    <i class="fas fa-check-double"></i>
-                                </div>
-                                <p class="ml-3 text-gray-700 dark:text-gray-300">
-                                    <span class="font-medium">检查暑假作业</span> - 确保暑假作业完成，关系到孩子这个暑假能否完美收官。
-                                </p>
-                            </div>
-                        </div>
+            </div>
+        </section>
+
+        <!-- 六大领域 -->
+        <section class="section fade-in">
+            <h2 class="section-title">全面发展六大领域</h2>
+            <p class="section-subtitle">多元成长，发现孩子的无限可能</p>
+            <div class="area-grid">
+                <div class="area-card">
+                    <div class="area-card-strip blue"></div>
+                    <div class="area-card-body">
+                        <div class="icon-circle blue"><i class="fas fa-book-open"></i></div>
+                        <h3>阅读</h3>
+                        <p>读书是增长知识，与高贵的灵魂交流的方式。不妨早早列个书单。</p>
+                    </div>
+                </div>
+                <div class="area-card">
+                    <div class="area-card-strip green"></div>
+                    <div class="area-card-body">
+                        <div class="icon-circle green"><i class="fas fa-film"></i></div>
+                        <h3>观影</h3>
+                        <p>好电影可以启迪心灵，引起情感共鸣。列个影单，好好欣赏几部好电影。</p>
+                    </div>
+                </div>
+                <div class="area-card">
+                    <div class="area-card-strip orange"></div>
+                    <div class="area-card-body">
+                        <div class="icon-circle orange"><i class="fas fa-running"></i></div>
+                        <h3>运动</h3>
+                        <p>好身体是一切的基础，坚持某项运动，或学习新的体育技能。</p>
+                    </div>
+                </div>
+                <div class="area-card">
+                    <div class="area-card-strip purple"></div>
+                    <div class="area-card-body">
+                        <div class="icon-circle purple"><i class="fas fa-plane"></i></div>
+                        <h3>旅游</h3>
+                        <p>读万卷书，不如行万里路。暑假的旅游攻略，一定要早早做好。</p>
+                    </div>
+                </div>
+                <div class="area-card">
+                    <div class="area-card-strip pink"></div>
+                    <div class="area-card-body">
+                        <div class="icon-circle pink"><i class="fas fa-paint-brush"></i></div>
+                        <h3>特长训练</h3>
+                        <p>画画、弹琴、跳舞、下棋……找到孩子最感兴趣的，好好感受一下。</p>
+                    </div>
+                </div>
+                <div class="area-card">
+                    <div class="area-card-strip teal"></div>
+                    <div class="area-card-body">
+                        <div class="icon-circle teal"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>学习</h3>
+                        <p>暑假开始就把作业好好分配，合理规划每科作业进度，查漏补缺。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="mb-16 fade-in">
-            <h2 class="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">🌈 全面发展六大领域</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover transition-all duration-300">
-                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 flex justify-center">
-                        <i class="fas fa-book-open text-indigo-600 dark:text-indigo-400 text-4xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">阅读</h3>
-                        <p class="text-gray-700 dark:text-gray-300">读书是增长知识，与高贵的灵魂交流的方式。这个假期，准备读哪几本书，不妨早早列个书单。</p>
-                    </div>
-                </div>
-                
-                <div class="bg-white  dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover transition-all duration-300">
-                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 flex justify-center">
-                        <i class="fas fa-film text-indigo-600 dark:text-indigo-400 text-4xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">观影</h3>
-                        <p class="text-gray-700 dark:text-gray-300">好电影可以启迪心灵，引起情感共鸣。列个影单，在假期中好好欣赏几部好电影。</p>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover transition-all duration-300">
-                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 flex justify-center">
-                        <i class="fas fa-running text-indigo-600 dark:text-indigo-400 text-4xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">运动</h3>
-                        <p class="text-gray-700 dark:text-gray-300">好身体是一切的基础，在这个假期，继续坚持某项运动，或学习新的体育技能。</p>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover transition-all duration-300">
-                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 flex justify-center">
-                        <i class="fas fa-plane text-indigo-600 dark:text-indigo-400 text-4xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">旅游</h3>
-                        <p class="text-gray-700 dark:text-gray-300">读万卷书，不如行万里路。出行不能盲目，暑假的旅游攻略，一定要早早做好。</p>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover transition-all duration-300">
-                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 flex justify-center">
-                        <i class="fas fa-paint-brush text-indigo-600 dark:text-indigo-400 text-4xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">特长训练</h3>
-                        <p class="text-gray-700 dark:text-gray-300">画画、弹琴、跳舞、下棋...哪一项是孩子最感兴趣的，不妨在这个假期里好好感受一下。</p>
-                    </div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover transition-all duration-300">
-                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 flex justify-center">
-                        <i class="fas fa-graduation-cap text-indigo-600 dark:text-indigo-400 text-4xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-indigo-600 dark:text-indigo-400">学习</h3>
-                        <p class="text-gray-700 dark:text-gray-300">暑假开始就把作业好好分配一下，合理规划每科作业进度，查漏补缺。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="bg-indigo-50 dark:bg-indigo-900 rounded-2xl p-8 mb-16 fade-in">
-            <div class="text-center max-w-3xl mx-auto">
-                <h2 class="text-3xl font-bold mb-6 text-indigo-600 dark:text-indigo-200">📝 暑假计划模板下载</h2>
-                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">为了方便您制定计划，我们准备了可打印的暑假计划模板，包含时间表和打卡区域，帮助孩子养成良好的暑期习惯。</p>
-                <button id="showDownloadModal" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 flex items-center mx-auto">
-                    <i class="fas fa-download mr-2"></i>
-                    下载完整计划模板
+        <!-- 模板下载 CTA -->
+        <section class="section fade-in" style="border-top: none;">
+            <div class="cta-banner">
+                <span class="icon-circle blue" style="display: inline-flex; margin-bottom: 20px; width: 56px; height: 56px; font-size: 24px;"><i class="fas fa-file-alt"></i></span>
+                <h2>暑假计划模板下载</h2>
+                <p>我们准备了可打印的暑假计划模板，包含时间表和打卡区域，帮助孩子养成良好的暑期习惯。</p>
+                <button id="showDownloadModal" class="btn btn-primary" style="padding: 14px 36px; font-size: 16px;">
+                    <i class="fas fa-download"></i> 下载完整计划模板
                 </button>
             </div>
         </section>
+
     </main>
 
-    <footer class="bg-gray-100 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center">
-                <h2 class="text-4xl font-bold mb-6 text-gray-800 dark:text-white">愿每个孩子都拥有一个</h2>
-                <p class="text-3xl text-indigo-600 dark:text-indigo-400 font-bold mb-8">有意义的假期！</p>
-                
-                <!-- 分享按钮保持不变... -->
-                     <div class="flex justify-center space-x-4 mb-8">
-                    <button class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors">
-                        <i class="fab fa-weixin"></i>
-                    </button>
-                    <button class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors">
-                        <i class="fab fa-weibo"></i>
-                    </button>
-                    <button class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-                
-                <p class="text-gray-600 dark:text-gray-400 text-sm">
-                    &copy; <span id="currentYear"></span> 暑假计划指南. 所有内容仅供参考，请根据实际情况调整。
-                </p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2>愿每个孩子都拥有一个</h2>
+            <p class="footer-accent">有意义的假期！</p>
+            <div class="footer-share">
+                <button title="微信分享"><i class="fab fa-weixin"></i></button>
+                <button title="微博分享"><i class="fab fa-weibo"></i></button>
+                <button title="复制链接"><i class="fas fa-link"></i></button>
             </div>
+            <small>&copy; <span id="currentYear"></span> 暑假计划指南 &middot; 所有内容仅供参考，请根据实际情况调整</small>
         </div>
     </footer>
 
-    <button id="themeToggle" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 shadow-lg flex items-center justify-center text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors z-50">
-        <i class="fas fa-moon dark:hidden"></i>
-        <i class="fas fa-sun hidden dark:block"></i>
+    <!-- 主题切换 -->
+    <button id="themeToggle" class="theme-toggle" title="切换主题">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
     </button>
+
+    <!-- 隐藏的PDF模板容器，用于html2canvas渲染 -->
+    <div id="pdfTemplate" style="position: absolute; left: -9999px; top: 0; width: 800px; background: #ffffff; padding: 30px; font-family: 'Noto Sans SC', sans-serif; color: #333;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #3b82f6; font-size: 26px; margin-bottom: 8px;">暑假计划模板</h1>
+            <p style="font-size: 16px; color: #555;">为孩子规划一个充实有意义的暑假</p>
+            <div style="width: 100%; height: 2px; background: #3b82f6; margin-top: 15px;"></div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <tr style="background: #3b82f6; color: #fff;">
+                <th style="padding: 10px; border: 1px solid #2563eb;">学生姓名</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">年级</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">家长电话</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">计划日期</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd; height: 30px;">&nbsp;</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td>
+            </tr>
+        </table>
+
+        <h2 style="color: #3b82f6; font-size: 20px; margin: 20px 0 12px;">三阶段计划</h2>
+        <div style="margin-bottom: 15px;">
+            <h3 style="color: #4f46e5; font-size: 16px; margin-bottom: 6px;">第一阶段：亲近自然好时机（前2周）</h3>
+            <p style="font-size: 14px; margin: 0 0 4px 0;">活动内容：拜访祖父母　·　亲子旅游　·　参加夏令营</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 8px;">
+                <tr style="background: #eef2ff;">
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">活动</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">计划日期</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">完成情况</th>
+                </tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">拜访祖父母</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">亲子旅游</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">参加夏令营</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            </table>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <h3 style="color: #4f46e5; font-size: 16px; margin-bottom: 6px;">第二阶段：查缺补漏好时机（中期）</h3>
+            <p style="font-size: 14px; margin: 0 0 4px 0;">活动内容：制定作息表　·　完成暑假作业　·　参加兴趣班　·　做家务　·　阅读书籍　·　户外锻炼</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 8px;">
+                <tr style="background: #eef2ff;">
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">活动</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">计划日期</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">完成情况</th>
+                </tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">制定作息表</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">完成暑假作业</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">参加兴趣班</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">做家务</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">阅读书籍</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">户外锻炼</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            </table>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h3 style="color: #4f46e5; font-size: 16px; margin-bottom: 6px;">第三阶段："收心"阶段（最后1周）</h3>
+            <p style="font-size: 14px; margin: 0 0 4px 0;">活动内容：调整作息　·　预习新内容　·　检查暑假作业</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 8px;">
+                <tr style="background: #eef2ff;">
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">活动</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">计划日期</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">完成情况</th>
+                </tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">调整作息</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">预习新内容</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">检查暑假作业</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 8px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            </table>
+        </div>
+
+        <h2 style="color: #3b82f6; font-size: 20px; margin: 25px 0 12px;">每日计划表</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <tr style="background: #3b82f6; color: #fff;">
+                <th style="padding: 10px; border: 1px solid #2563eb;">时间</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周一</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周二</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周三</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周四</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周五</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周六</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">周日</th>
+            </tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">7:00-8:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">8:00-9:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">9:00-10:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">10:00-11:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">11:00-12:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">12:00-13:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">13:00-14:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">14:00-15:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">15:00-16:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">16:00-17:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">17:00-18:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">19:00-20:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">20:00-21:00</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+        </table>
+
+        <h2 style="color: #3b82f6; font-size: 20px; margin: 25px 0 12px;">暑期阅读清单</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <tr style="background: #3b82f6; color: #fff;">
+                <th style="padding: 10px; border: 1px solid #2563eb;">书名</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">作者</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">计划阅读时间</th>
+                <th style="padding: 10px; border: 1px solid #2563eb;">完成情况</th>
+            </tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td><td style="padding: 10px; border: 1px solid #ddd;">&nbsp;</td></tr>
+        </table>
+
+        <div style="text-align: center; color: #999; font-size: 12px; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+            打印日期：<span id="pdfPrintDate"></span>　|　祝孩子度过一个充实有意义的暑假！
+        </div>
+    </div>
 
     <script>
         // 设置当前年份
@@ -512,117 +1063,65 @@
             }
         });
 
-        // 生成PDF模板
-        downloadPDF.addEventListener('click', () => {
-            // 使用jsPDF生成PDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // 添加标题
-            doc.setFontSize(20);
-            doc.setTextColor(59, 130, 246);
-            doc.text('暑假计划模板', 105, 20, { align: 'center' });
-            
-            // 添加副标题
-            doc.setFontSize(14);
-            doc.setTextColor(0, 0, 0);
-            doc.text('为孩子规划一个充实有意义的暑假', 105, 30, { align: 'center' });
-            
-            // 添加分隔线
-            doc.setDrawColor(59, 130, 246);
-            doc.setLineWidth(0.5);
-            doc.line(20, 35, 190, 35);
-            
-            // 添加基本信息表格
-            doc.autoTable({
-                startY: 45,
-                head: [['学生姓名', '年级', '家长电话', '计划日期']],
-                body: [['', '', '', '']],
-                theme: 'grid',
-                headStyles: {
-                    fillColor: [59, 130, 246],
-                    textColor: 255
+        // 生成PDF模板（使用html2canvas确保中文正常渲染）
+        downloadPDF.addEventListener('click', async () => {
+            const template = document.getElementById('pdfTemplate');
+            const printDateEl = document.getElementById('pdfPrintDate');
+            printDateEl.textContent = new Date().toLocaleDateString('zh-CN');
+
+            // 将模板移到可视区域以便html2canvas渲染
+            template.style.left = '0';
+            template.style.top = '0';
+            template.style.position = 'fixed';
+            template.style.zIndex = '99999';
+
+            // 短暂延迟确保DOM更新
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            try {
+                const canvas = await html2canvas(template, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false
+                });
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.92);
+                const { jsPDF } = window.jspdf;
+
+                const pdfWidth = 210; // A4 width in mm
+                const pdfHeight = 297; // A4 height in mm
+                const imgWidth = pdfWidth;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                const doc = new jsPDF('p', 'mm', 'a4');
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                // 第一页
+                doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pdfHeight;
+
+                // 如果内容超出一页，添加后续页
+                while (heightLeft > 0) {
+                    position = pdfHeight - imgHeight; // offset for next page
+                    doc.addPage();
+                    doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pdfHeight;
                 }
-            });
-            
-            // 添加三阶段计划
-            const stages = [
-                { title: '第一阶段：亲近自然好时机 (前2周)', activities: ['拜访祖父母', '亲子旅游', '参加夏令营'] },
-                { title: '第二阶段：查缺补漏好时机 (中期)', activities: ['制定作息表', '完成暑假作业', '参加兴趣班', '做家务', '阅读书籍', '户外锻炼'] },
-                { title: '第三阶段：收心阶段 (最后1周)', activities: ['调整作息', '预习新内容', '检查暑假作业'] }
-            ];
-            
-            let startY = 75;
-            stages.forEach(stage => {
-                doc.setFontSize(16);
-                doc.setTextColor(59, 130, 246);
-                doc.text(stage.title, 20, startY);
-                
-                doc.setFontSize(12);
-                doc.setTextColor(0, 0, 0);
-                const activityText = stage.activities.join('  •  ');
-                doc.text(activityText, 20, startY + 7);
-                
-                startY += 15;
-            });
-            
-            // 添加每日计划表
-            doc.addPage();
-            doc.setFontSize(16);
-            doc.setTextColor(59, 130, 246);
-            doc.text('每日计划表', 105, 20, { align: 'center' });
-            
-            const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-            doc.autoTable({
-                startY: 30,
-                head: [['时间', '周一', '周二', '周三', '周四', '周五', '周六', '周日']],
-                body: [
-                    ['7:00-8:00', '', '', '', '', '', '', ''],
-                    ['8:00-9:00', '', '', '', '', '', '', ''],
-                    ['9:00-10:00', '', '', '', '', '', '', ''],
-                    ['10:00-11:00', '', '', '', '', '', '', ''],
-                    ['11:00-12:00', '', '', '', '', '', '', ''],
-                    ['12:00-13:00', '', '', '', '', '', '', ''],
-                    ['13:00-14:00', '', '', '', '', '', '', ''],
-                    ['14:00-15:00', '', '', '', '', '', '', ''],
-                    ['15:00-16:00', '', '', '', '', '', '', ''],
-                    ['16:00-17:00', '', '', '', '', '', '', ''],
-                    ['17:00-18:00', '', '', '', '', '', '', ''],
-                    ['19:00-20:00', '', '', '', '', '', '', ''],
-                    ['20:00-21:00', '', '', '', '', '', '', '']
-                ],
-                theme: 'grid',
-                headStyles: {
-                    fillColor: [59, 130, 246],
-                    textColor: 255
-                }
-            });
-            
-            // 添加阅读清单表格
-            doc.addPage();
-            doc.setFontSize(16);
-            doc.setTextColor(59, 130, 246);
-            doc.text('暑期阅读清单', 105, 20, { align: 'center' });
-            
-            doc.autoTable({
-                startY: 30,
-                head: [['书名', '作者', '计划阅读时间', '完成情况']],
-                body: [
-                    ['', '', '', ''],
-                    ['', '', '', ''],
-                    ['', '', '', ''],
-                    ['', '', '', ''],
-                    ['', '', '', '']
-                ],
-                theme: 'grid',
-                headStyles: {
-                    fillColor: [59, 130, 246],
-                    textColor: 255
-                }
-            });
-            
-            // 下载PDF
-            doc.save('暑假计划模板.pdf');
+
+                doc.save('暑假计划模板.pdf');
+            } catch (error) {
+                console.error('PDF生成失败:', error);
+                alert('PDF生成失败，请重试。');
+            }
+
+            // 恢复模板隐藏状态
+            template.style.left = '-9999px';
+            template.style.position = 'absolute';
+            template.style.top = '0';
+            template.style.zIndex = '';
+
             downloadModal.classList.remove('active');
         });
 
