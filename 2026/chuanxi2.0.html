@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>川西10日亲子自驾大环线 · 8/5–8/14</title>
+<style>
+  :root{
+    --bg:#f3f6f8; --card:#ffffff; --ink:#1f2d3d; --sub:#6b7a8d; --line:#e6ecf1;
+    --teal:#0e9488; --teal-d:#0b756c; --orange:#e8762b; --red:#d64545; --blue:#2f7ed8;
+    --green:#3aa655; --chip:#eef4f3; --yellow:#b8860b;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 0 40px;min-height:100vh;background:var(--bg);}
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0e9488,#13b3a3);color:#fff;padding:22px 18px 18px;}
+  .hero h1{margin:0 0 6px;font-size:21px;font-weight:700;letter-spacing:.5px;}
+  .hero .meta{font-size:13px;opacity:.95;}
+  .hero .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);
+    padding:2px 9px;border-radius:20px;font-size:12px;}
+  .gl8-note{background:#fff8e6;border:1px solid #f0d28a;color:#7a5a10;font-size:12.5px;
+    padding:9px 12px;margin:12px 12px 0;border-radius:10px;line-height:1.55;}
+  .gl8-note b{color:var(--red);}
+  .sec{margin:14px 12px 0;}
+  .sec-t{font-size:15px;font-weight:700;color:var(--teal-d);margin:0 4px 8px;
+    display:flex;align-items:center;gap:6px;}
+  .sec-t::before{content:"";width:4px;height:15px;background:var(--teal);border-radius:2px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;
+    box-shadow:0 1px 3px rgba(20,40,60,.04);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .stat{background:var(--chip);border-radius:10px;padding:10px;text-align:center;}
+  .stat b{display:block;font-size:18px;color:var(--teal-d);}
+  .stat span{font-size:11px;color:var(--sub);}
+  /* DAY CARD */
+  .day{border-left:4px solid var(--teal);cursor:pointer;transition:transform .08s;}
+  .day:active{transform:scale(.985);}
+  .day-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .day-h .d{font-weight:700;font-size:16px;}
+  .day-h .dt{font-size:12px;color:var(--sub);}
+  .wb{font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+  .wb.rain{background:#e8f1fb;color:var(--blue);}
+  .wb.mid{background:#fff3e6;color:var(--orange);}
+  .wb.sun{background:#e9f7ee;color:var(--green);}
+  .wb.risk{background:#fdeaea;color:var(--red);}
+  .route{font-size:13px;color:var(--sub);margin:6px 0 4px;}
+  .km{font-weight:600;color:var(--ink);}
+  .more{font-size:12.5px;color:var(--teal-d);font-weight:600;margin-top:4px;}
+  .more::after{content:" ›";}
+  /* DETAIL VIEW */
+  .detail{display:none;}
+  .detail.show{display:block;}
+  .back{position:sticky;top:0;background:var(--teal);color:#fff;font-size:13.5px;font-weight:600;
+    padding:11px 14px;z-index:9;box-shadow:0 1px 4px rgba(0,0,0,.1);cursor:pointer;display:flex;align-items:center;gap:8px;}
+  .back::before{content:"‹";font-size:20px;line-height:1;}
+  .dhero{background:linear-gradient(135deg,#0e9488,#13b3a3);color:#fff;padding:16px 18px;}
+  .dhero .dd{font-size:18px;font-weight:700;}
+  .dhero .dr{font-size:12.5px;opacity:.95;margin-top:3px;}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin:11px 12px 0;}
+  .block h3{margin:0 0 8px;font-size:14.5px;color:var(--teal-d);display:flex;align-items:center;gap:6px;}
+  .block h3 .ic{font-size:15px;}
+  table.rt{width:100%;border-collapse:collapse;font-size:12.3px;}
+  table.rt th,table.rt td{border:1px solid var(--line);padding:6px 7px;text-align:left;vertical-align:top;}
+  table.rt th{background:var(--chip);color:var(--teal-d);font-weight:600;}
+  .sum{font-size:12.5px;color:var(--sub);margin-top:7px;}
+  .sum b{color:var(--ink);}
+  /* timeline */
+  .tl{position:relative;padding-left:14px;}
+  .tl::before{content:"";position:absolute;left:4px;top:4px;bottom:4px;width:2px;background:var(--line);}
+  .tl-i{position:relative;padding:5px 0 7px;}
+  .tl-i::before{content:"";position:absolute;left:-13px;top:9px;width:8px;height:8px;border-radius:50%;
+    background:var(--teal);border:2px solid #fff;box-shadow:0 0 0 1px var(--teal);}
+  .tl-i .t{font-size:12.5px;font-weight:700;color:var(--teal-d);}
+  .tl-i .s{font-size:13px;}
+  .tl-i .du{font-size:11.5px;color:var(--sub);}
+  .tl-i .ti{font-size:12px;color:#7a4a2a;margin-top:2px;}
+  /* stay */
+  .stay{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--chip);}
+  .stay .nm{font-weight:700;font-size:14px;color:var(--ink);}
+  .stay .pr{font-size:12.5px;color:var(--orange);font-weight:600;margin:3px 0;}
+  .stay .nt{font-size:12.5px;color:#555;}
+  .stay .fb{font-size:12px;color:var(--sub);margin-top:5px;}
+  /* dining */
+  .din{font-size:13px;color:#444;line-height:1.7;}
+  .din b{color:var(--teal-d);}
+  /* parking nav */
+  .pnav{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;}
+  .pnav a{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;
+    font-size:12.5px;padding:6px 11px;border-radius:9px;}
+  .pnav a.rt{background:var(--teal);}
+  /* avoid */
+  .av{font-size:12.8px;color:#7a3a1a;background:#fff6ef;border-left:3px solid var(--orange);
+    padding:7px 10px;border-radius:0 8px 8px 0;margin:6px 0;line-height:1.55;}
+  .av b{color:var(--orange);}
+  .av.rd{background:#fdeaea;border-left-color:var(--red);color:#8a2b2b;}
+  .av.rd b{color:var(--red);}
+  .food2{font-size:13px;color:#555;margin-top:6px;}
+  .bud2{font-size:12px;color:var(--sub);margin-top:8px;text-align:right;}
+  .wxbadge{font-size:12px;padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:6px;}
+  table.bd{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.bd th,table.bd td{border:1px solid var(--line);padding:6px 7px;text-align:left;}
+  table.bd th{background:var(--chip);color:var(--teal-d);font-weight:600;}
+  .chk{font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line);display:flex;gap:8px;}
+  .chk::before{content:"☐";color:var(--teal);}
+  .disc{font-size:11.5px;color:var(--sub);padding:10px 14px;line-height:1.7;}
+  .tot{font-size:14px;font-weight:700;color:var(--teal-d);text-align:center;margin-top:4px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+
+  <!-- ============ OVERVIEW ============ -->
+  <div id="overview">
+    <div class="hero">
+      <h1>🏔️ 川西10日大环线</h1>
+      <div class="meta">8/5晚 合肥✈成都 → 8/14 成都✈合肥 · 2家庭·4大2小·1辆别克GL8</div>
+      <div class="tags">
+        <span class="tag">深度格聂</span>
+        <span class="tag">民宿优先×3晚</span>
+        <span class="tag">海拔阶梯适应</span>
+        <span class="tag">雨季谨慎</span>
+      </div>
+    </div>
+
+    <div class="gl8-note">
+      🚐 <b>车辆变更说明</b>：按你要求改为 <b>1 辆别克 GL8（两驱 MPV）</b>。GL8 离地间隙低（约15cm）、两驱，<b>无法通行格聂南线非铺装路</b>。因此 D7–D8 格聂段改为：<b>在巴塘包当地四驱越野车（含司机）进入则巴村/格聂之眼/铁匠山，GL8 停巴塘；D8 在理塘与 GL8 会合后继续</b>。若天气差，则放弃格聂、GL8 直接走 G318 铺装路（巴塘→理塘→新都桥）。
+    </div>
+
+    <div class="sec">
+      <div class="sec-t">行程速览</div>
+      <div class="card grid">
+        <div class="stat"><b>10天</b><span>9晚 / 2间每晚</span></div>
+        <div class="stat"><b>≈1800km</b><span>GL8单程·+格聂包车</span></div>
+        <div class="stat"><b>2560→4860m</b><span>夜宿≤3900m</span></div>
+        <div class="stat"><b>¥3.6–5.7万</b><span>6人总预算</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-t">🌤️ 天气总览（8/5–8/14 · 天气网预报·远期参考）</div>
+      <div class="card">
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/5 D1</span><span style="color:var(--sub);">合肥/成都 多云</span><span>正常</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/6 D2</span><span style="color:var(--sub);">成都<b style="color:#d64545">中雨</b>→康定多云</span><span style="color:#d64545;font-weight:600;">出城湿滑</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/7 D3</span><span style="color:var(--sub);">康定<b style="color:#d64545">中雨</b>(高山更冷)</span><span style="color:#d64545;font-weight:600;">垭口雨雾</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/8 D4</span><span style="color:var(--sub);">康定多云·道孚小雨</span><span>尚可</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/9 D5</span><span style="color:var(--sub);">道孚/雅江 多云</span><span>友好</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/10 D6</span><span style="color:var(--sub);">雅江/理塘<b style="color:#d64545">中雨</b></span><span style="color:#d64545;font-weight:600;">最高垭口遇雨</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/11 D7</span><span style="color:var(--sub);">巴塘多云·格聂小雨多变</span><span style="color:#d64545;font-weight:600;">风险日</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/12 D8</span><span style="color:var(--sub);">理塘小雨·新都桥多云</span><span>谨慎</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);"><span style="font-weight:600;">8/13 D9</span><span style="color:var(--sub);">新都桥<b style="color:#d64545">中雨</b>·丹巴/小金小雨</span><span style="color:#d64545;font-weight:600;">湿滑</span></div>
+        <div class="wx-row" style="display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;"><span style="font-weight:600;">8/14 D10</span><span style="color:var(--sub);">小金小雨·成都/合肥多云</span><span>正常</span></div>
+        <div class="disc" style="padding:8px 0 0;">⚠️ 8月上旬川西主汛期，整体偏湿，多驾驶日有中雨/小雨。<b>出行前3–5天务必用中国天气网/墨迹逐区县复核</b>，并关注「四川交通」「甘孜交警」实时管制。高山垭口气温为估算（比县城低8~12℃）。</div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-t">📅 逐日行程（点卡片看详情）</div>
+    </div>
+    <div id="daylist"></div>
+
+    <!-- BUDGET -->
+    <div class="sec">
+      <div class="sec-t">💰 总预算（6人·2家庭·2间/晚·1辆GL8）</div>
+      <div class="card">
+        <table class="bd">
+          <tr><th>类别</th><th>人均</th><th>合计</th></tr>
+          <tr><td>机票（合肥⇄成都）</td><td>¥1400–2600</td><td>¥8400–15600</td></tr>
+          <tr><td>租车 1辆GL8（10天）</td><td>¥1200–1400</td><td>¥7000–8000</td></tr>
+          <tr><td>格聂当地四驱包车（2天）</td><td>¥270–400</td><td>¥1600–2400</td></tr>
+          <tr><td>油费+过路（1车）</td><td>¥350–450</td><td>¥2000–2500</td></tr>
+          <tr><td>住宿（2间/晚）</td><td>¥880–1550</td><td>¥5300–9300</td></tr>
+          <tr><td>门票</td><td>¥500–750</td><td>¥3000–4500</td></tr>
+          <tr><td>餐饮</td><td>¥1000–1500</td><td>¥6000–9000</td></tr>
+          <tr><td>其他（氧气/药/保险/补给/停车）</td><td>¥450–800</td><td>¥2500–4500</td></tr>
+        </table>
+        <div class="tot">总计 ≈ ¥35800 – 56800（人均 ¥6000–9500）</div>
+        <div class="disc" style="padding:8px 0 0;">较「2辆四驱SUV」版省约 ¥1 万，但放弃了两车编队的安全冗余与格聂自驾（改包当地四驱）。房间精算：一家2大1小=1间。</div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST -->
+    <div class="sec">
+      <div class="sec-t">🚨 必做清单 & 硬规则</div>
+      <div class="card">
+        <div class="chk">双桥沟：公众号「阿坝旅游网」提前1–2天预约（当日14:30前）</div>
+        <div class="chk">木格措/墨石：公众号提前1–2天</div>
+        <div class="chk">姑弄村/甲根措/则巴村民宿：提前2–4周订（订不到→八美/塔公fallback）</div>
+        <div class="chk">新都桥/四姑娘山/康定酒店：提前1个月（2间/晚）</div>
+        <div class="chk">租车：成都订1辆别克GL8（7座两驱）；<b style="color:var(--red)">格聂段另在巴塘包当地四驱越野</b></div>
+        <div class="chk">机票：8/5晚去·8/14傍晚回，提前1个月盯价</div>
+        <div class="disc" style="padding:8px 0 0;">
+          🔴 硬规则：①雨季早出早到不夜路，遇塌方掉头走大路；②GL8两驱不可入格聂，须包四驱；③首两晚≤3000m、前两天不洗澡；④格聂天气差立即放弃；⑤理塘/巴塘加满油；⑥看护2个孩子远离崖边/深水/热水池。
+        </div>
+      </div>
+    </div>
+
+    <div class="disc">
+      ⚠️ 以上基于公开资料与腾讯地图路径规划整理；票价/预约/路况以官方为准。天气为2026-07-15抓取天气网40天预报（远期参考），出行前3–5天用中国天气网/墨迹逐区县复核，关注「四川交通」「甘孜交警」实时管制。文中腾讯地图链接点开即在App拉起导航。参考坐标多为经验值，最终以App为准。
+    </div>
+  </div>
+
+  <!-- ============ DETAIL (rendered by JS) ============ -->
+  <div id="detail" class="detail"></div>
+
+</div>
+
+<script>
+const QQ = "https://apis.map.qq.com/uri/v1/";
+const DAYS = [
+  {
+    id:1, day:"Day 1", date:"8/5（晚）", wx:"多云", wxt:"sun",
+    route:"合肥 ✈ 成都（约2.5h）→ 酒店休整 · 海拔500m",
+    km:"飞行约2.5h",
+    segments:[{f:"合肥新桥机场",t:"成都天府/双流机场",d:"飞行 ≈ 2.5h",time:"—",road:"国内航班，建议选晚间航班落地，不赶夜路"}],
+    sum:"城际交通为飞行，无自驾路段；次日成都取车出发。",
+    schedule:[
+      {t:"晚间",s:"合肥飞成都（约2.5h），落地打车/接送至酒店",du:"—",ti:"选晚班机，落地即休整，海拔500m纯适应"},
+      {t:"晚",s:"住成都，早休息",du:"—",ti:"不洗澡洗头，为高原蓄力"}
+    ],
+    stay:{nm:"成都·舒适酒店",pr:"¥300–500/间",nt:"晚航班落地休整，次日上午取车",fb:"推荐春熙路/天府广场/火车东站附近，方便次日取车与出发"},
+    dining:"<b>餐饮</b>：成都晚餐清淡些（火锅/串串先别太辣，给肠胃和海拔适应留余地）。推荐：老妈蹄花、龙抄手、清汤面。",
+    parking:[
+      {n:"成都租车点",u:QQ+"search?keyword=%E6%88%90%E9%83%BD%E7%A7%9F%E8%BD%A6&referer=chuanxi2026"},
+      {n:"成都双流机场",u:QQ+"search?keyword=%E6%88%90%E9%83%BD%E5%8F%8C%E6%B5%81%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"落地当天<b>不洗澡洗头</b>、不饮酒，给身体适应海拔的窗口",rd:false},
+      {t:"晚班机若延误，提前约好接送，避免深夜自驾",rd:false}
+    ],
+    budget:"机票 ¥700–1300/人 + 餐饮 ¥150"
+  },
+  {
+    id:2, day:"Day 2", date:"8/6", wx:"成都中雨→康定多云", wxt:"mid",
+    route:"成都→天全服务区→泸定桥→康定(2560m)",
+    km:"260km / 3.5–4.5h",
+    segments:[
+      {f:"成都",t:"天全服务区（G4218雅康高速）",d:"约175km",time:"约2h",road:"全程高速，桥隧比高，隧道限速80，部分GPS弱→提前下离线地图"},
+      {f:"天全服务区",t:"泸定桥（雅康高速至泸定出口）",d:"约30–40km",time:"约40min",road:"高速，新二郎山隧道群，注意限速"},
+      {f:"泸定桥",t:"康定（G318）",d:"约55km",time:"约1h+",road:"山路弯道增加，雨季（6–8月）偶有落石/临时管制"}
+    ],
+    sum:"合计 <b>约260km / 3.5–4.5h</b>（腾讯地图实测成都→康定 259.7km/182min）。过路费约¥119（雅康高速段）×1车。",
+    schedule:[
+      {t:"08:00",s:"成都取车出发，走雅康高速",du:"—",ti:"早出避雨，中雨减速"},
+      {t:"10:30",s:"天全服务区打卡（网红服务区）",du:"0.5h",ti:"免费拍照、加满油补给"},
+      {t:"12:30",s:"泸定桥（门票约¥10）",du:"1h",ti:"红色教育，孩子感兴趣"},
+      {t:"15:00",s:"抵康定，游情歌广场/跑马山脚",du:"2h",ti:"慢节奏，首晚高原"},
+      {t:"晚",s:"住康定供氧酒店",du:"—",ti:"2560m，首晚高原别洗澡"}
+    ],
+    stay:{nm:"康定·供氧/舒适酒店",pr:"¥300–500/间",nt:"首晚高原，选供氧房更稳",fb:"康定县城（2560m），临河或近情歌广场，fallback 无"},
+    dining:"<b>餐饮</b>：天全服务区简餐；康定晚餐推荐<b>牦牛肉汤锅、康定凉粉、酸奶</b>，热乎暖胃、帮助适应。服务区餐饮偏贵，正餐到康定吃。",
+    parking:[
+      {n:"天全服务区",u:QQ+"search?keyword=%E5%A4%A9%E5%85%A8%E6%9C%8D%E5%8A%A1%E5%8C%BA&referer=chuanxi2026"},
+      {n:"泸定桥",u:QQ+"search?keyword=%E6%B3%B8%E5%AE%9A%E6%A1%A5&referer=chuanxi2026"},
+      {n:"康定市",u:QQ+"search?keyword=%E5%BA%B7%E5%AE%9A%E5%B8%82&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"<b>成都清晨中雨</b>，出城即湿滑减速；出雅康高速后转多云",rd:false},
+      {t:"泸定桥铁索晃动+桥下激流，<b>牵好2个初中生</b>，禁奔跑、禁探身；雨天桥面更滑",rd:false},
+      {t:"康定2560m首晚最易高反，晚饭别喝酒、别太饱、别洗澡",rd:false}
+    ],
+    budget:"油费过路¥240 + 门票¥10×6 + 住宿¥450×2间 + 餐饮¥600"
+  },
+  {
+    id:3, day:"Day 3", date:"8/7", wx:"康定中雨", wxt:"mid",
+    route:"康定→434→中谷村→木格措(3780)→机场路(4400)→八朗生都(4200)→姑弄村(3600)",
+    km:"114km / 2.5h",
+    segments:[
+      {f:"康定",t:"木格措（S434省道）",d:"34.5km",time:"约1.5h",road:"铺装山路，弯多，雨后落石（腾讯实测34.5km/93min）"},
+      {f:"木格措",t:"机场路→八朗生都",d:"约50–60km",time:"约1h",road:"S434+机场路铺装好，彩虹公路出片；八朗生都末约3km碎石路"},
+      {f:"八朗生都",t:"姑弄村",d:"约20–30km",time:"约0.5h",road:"进村路面较窄、恰够会车，慢行让行"}
+    ],
+    sum:"合计 <b>康定→姑弄村约114km / 2.5h</b>。S434路边常见松动落石，雨后慎行。",
+    schedule:[
+      {t:"08:00",s:"康定沿434→中谷村（温泉村）",du:"1h",ti:"免费，可泡脚放松"},
+      {t:"10:00",s:"木格措（门票¥105–110+观光车¥90）",du:"3h",ti:"湖景3780m，不剧烈运动"},
+      {t:"13:30",s:"434彩虹机场路（4400m观景）",du:"0.5h",ti:"短暂观景即走"},
+      {t:"15:00",s:"八朗生都观景台（4200m）",du:"1h",ti:"清洁费，风大低温穿冲锋衣"},
+      {t:"17:00",s:"姑弄村入住民宿（优先）",du:"—",ti:"3600m，溪流草甸牦牛"}
+    ],
+    stay:{nm:"姑弄村·藏式民宿（优先）",pr:"¥300–500/间",nt:"雪山溪流草甸，亲子奔跑友好",fb:"订不到→塔公/新都桥舒适酒店 ¥300–500。村中无餐厅，晚餐提前订民宿餐"},
+    dining:"<b>餐饮</b>：康定早餐；木格措景区内简餐或自带干粮；姑弄村晚餐吃<b>藏家民宿家常菜（牦牛肉、酸奶、青稞饼）</b>，也可自带泡面/自热锅。",
+    parking:[
+      {n:"中谷村",u:QQ+"search?keyword=%E4%B8%AD%E8%B0%B7%E6%9D%91&referer=chuanxi2026"},
+      {n:"木格措",u:QQ+"search?keyword=%E5%BA%B7%E5%AE%9A%E6%83%85%E6%AD%8C%E9%A3%8E%E6%99%AF%E5%8C%BA&referer=chuanxi2026"},
+      {n:"康定机场路",u:QQ+"search?keyword=%E5%BA%B7%E5%AE%9A%E6%9C%BA%E5%9C%BA&referer=chuanxi2026"},
+      {n:"八朗生都",u:QQ+"search?keyword=%E5%85%AB%E6%9C%97%E7%94%9F%E9%83%BD&referer=chuanxi2026"},
+      {n:"姑弄村",u:QQ+"search?keyword=%E5%A7%91%E5%BC%84%E6%9D%91&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"<b>全天中雨</b>，高山段更冷雨雾——机场路/八朗生都<b>短暂观景即走不逗留</b>",rd:false},
+      {t:"木格措3780m<b>不跑跳</b>；雨天湖面起雾观景打折但人少；观光车末班注意别误车",rd:false},
+      {t:"八朗生都末3km碎石路雨天易打滑，慢行；旺季村民收清洁费备零钱",rd:false},
+      {t:"姑弄村无餐厅/小卖部，晚餐自备或提前订民宿餐；夜温低、可能断电，带<b>头灯/睡袋内胆</b>",rd:false}
+    ],
+    budget:"木格措¥200×4成人 + 油费¥150 + 民宿¥450×2间 + 餐饮¥600"
+  },
+  {
+    id:4, day:"Day 4", date:"8/8", wx:"康定多云·道孚小雨", wxt:"rain",
+    route:"姑弄村→甲根措(3800,民宿夜)",
+    km:"70–90km / 1.5–2h",
+    segments:[
+      {f:"姑弄村",t:"甲根措（经塔公/八美乡道接G248）",d:"约70–90km",time:"约1.5–2h",road:"铺装柏油为主，部分乡道较窄、会车留意"}
+    ],
+    sum:"合计 <b>约70–90km / 1.5–2h</b>。导航曾误解析到省外416km，<b>出行前用导航二次核实</b>。",
+    schedule:[
+      {t:"08:30",s:"姑弄村清晨草甸/溪流",du:"1h",ti:"免费，孩子可奔跑"},
+      {t:"10:00",s:"姑弄村→甲根措（小众湖）",du:"1.5h",ti:"约3800m，免费人少出片"},
+      {t:"12:00",s:"甲根措湖畔漫步/入住民宿",du:"2h",ti:"慢节奏，高原不赶"},
+      {t:"15:00",s:"周边自在（不赶路）",du:"—",ti:"民宿发呆/看星"},
+      {t:"晚",s:"住甲根措民宿/营地",du:"—",ti:"3800m，条件朴素"}
+    ],
+    stay:{nm:"甲根措·民宿/营地（优先）",pr:"¥300–600/间",nt:"小众湖畔，条件朴素（可能无独立卫浴/断电）",fb:"订不到→八美镇舒适酒店 ¥300–450（约30–40km）"},
+    dining:"<b>餐饮</b>：自备干粮/自热锅为主（甲根措无餐厅，民宿家常菜需提前说）；车上备足零食水果。",
+    parking:[
+      {n:"甲根措（甲根坝镇）",u:QQ+"search?keyword=%E7%94%B2%E6%A0%B9%E6%8E%AA&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"甲根措条件朴素，<b>备头灯/自热锅/湿纸巾</b>",rd:false},
+      {t:"湖边无护栏，<b>看护2个孩子勿靠近深水/湿滑岸</b>",rd:false},
+      {t:"甲根坝乡道窄，会车慢行；无信号，提前离线地图",rd:false}
+    ],
+    budget:"油费¥100 + 民宿¥450×2间 + 餐饮¥600（含自备）"
+  },
+  {
+    id:5, day:"Day 5", date:"8/9", wx:"道孚/雅江 多云", wxt:"sun",
+    route:"甲根措→墨石公园(3500)→塔公→雅江(2600)",
+    km:"190–220km / 4–5h",
+    segments:[
+      {f:"甲根措",t:"墨石公园（G248）",d:"89.3km",time:"约1h45min",road:"铺装柏油，弯多（腾讯实测89.3km/107min）"},
+      {f:"墨石公园",t:"塔公草原",d:"约30km",time:"约0.5h",road:"G248铺装，车流适中"},
+      {f:"塔公",t:"雅江（G248→G318）",d:"约70–100km",time:"约1.5–2h",road:"G318峡谷段较窄、弯道；部分限速"}
+    ],
+    sum:"合计 <b>约190–220km / 4–5h</b>。路面整体铺装良好，雨季警惕落石与湿滑。",
+    schedule:[
+      {t:"08:30",s:"甲根措→墨石公园",du:"1.5h",ti:"异域石林"},
+      {t:"10:00",s:"墨石公园（门票¥60+观光车¥20，看土拨鼠）",du:"2.5h",ti:"孩子最爱"},
+      {t:"13:00",s:"塔公草原骑马（清洁费¥15）",du:"1.5h",ti:"亲子友好"},
+      {t:"15:30",s:"抵雅江住舒适酒店",du:"—",ti:"降到2600m休整"}
+    ],
+    stay:{nm:"雅江·舒适酒店",pr:"¥250–400/间",nt:"主动下到低海拔休整",fb:"雅江县城（2600m），fallback 无"},
+    dining:"<b>餐饮</b>：八美/墨石附近川菜馆午餐；雅江晚餐藏餐或川菜（牦牛肉、面块）。",
+    parking:[
+      {n:"墨石公园",u:QQ+"search?keyword=%E5%A2%A8%E7%9F%B3%E5%85%AC%E5%9B%AD&referer=chuanxi2026"},
+      {n:"塔公草原",u:QQ+"search?keyword=%E5%A1%94%E5%85%AC%E8%8D%89%E5%8E%9F&referer=chuanxi2026"},
+      {n:"雅江县",u:QQ+"search?keyword=%E9%9B%85%E6%B1%9F%E5%8E%BF&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"墨石步道雨后湿滑，<b>牵好孩子防摔倒</b>",rd:false},
+      {t:"土拨鼠野性动物，<b>别让孩子徒手喂食/靠近</b>",rd:false},
+      {t:"塔公骑马选正规马队、戴头盔，孩子成人陪乘；草原湿地陷车，停硬化停车场；尊重寺庙",rd:false}
+    ],
+    budget:"墨石¥80×4 + 骑马¥100–150×6 + 油费¥150 + 住宿¥350×2间 + 餐饮¥600"
+  },
+  {
+    id:6, day:"Day 6", date:"8/10", wx:"雅江/理塘中雨", wxt:"mid",
+    route:"雅江→天路十八弯→理塘(4000)→姊妹湖(4500)→巴塘(2580)",
+    km:"300km / 6h",
+    segments:[
+      {f:"雅江",t:"理塘（G318，经剪子湾山/卡子拉山4718m）",d:"134.6km",time:"约3h",road:"铺装柏油，连续弯道（腾讯实测134.6km/179min）"},
+      {f:"理塘",t:"姊妹湖（G318）",d:"约110–120km",time:"约2h",road:"天路十八弯后毛垭草原，平缓铺装"},
+      {f:"姊妹湖",t:"巴塘（G318）",d:"约50km",time:"约1h",road:"平缓铺装，车少景美"}
+    ],
+    sum:"合计 <b>约300km / 6h</b>。天路十八弯为连续U型发卡弯，低速鸣笛；理塘仅穿城补给不过夜。",
+    schedule:[
+      {t:"08:00",s:"雅江出发，翻天路十八弯",du:"2h",ti:"弯道多，减速鸣笛"},
+      {t:"11:00",s:"理塘（4000m，天空之城）",du:"1h",ti:"短停补给，不贪玩"},
+      {t:"13:00",s:"姊妹湖/海子山（4500m观景）",du:"0.5h",ti:"全线最高点，仅观景"},
+      {t:"15:30",s:"抵巴塘住舒适酒店",du:"—",ti:"降到2580m低海拔"}
+    ],
+    stay:{nm:"巴塘·舒适酒店",pr:"¥250–450/间",nt:"低海拔恢复，格聂前最后大补给",fb:"巴塘县城（2580m），fallback 无"},
+    dining:"<b>餐饮</b>：理塘午餐清淡（高原第一顿别油腻）；巴塘晚餐推荐<b>巴塘冒菜/藏餐</b>，县城选择多。",
+    parking:[
+      {n:"天路十八弯",u:QQ+"search?keyword=%E5%A4%A9%E8%B7%AF%E5%8D%81%E5%85%AB%E5%BC%AF&referer=chuanxi2026"},
+      {n:"理塘县",u:QQ+"search?keyword=%E7%90%86%E5%A1%98%E5%8E%BF&referer=chuanxi2026"},
+      {n:"海子山姊妹湖",u:QQ+"search?keyword=%E5%A7%8A%E5%A6%B9%E6%B9%96&referer=chuanxi2026"},
+      {n:"巴塘县",u:QQ+"search?keyword=%E5%B7%B4%E5%A1%98%E5%8E%BF&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"<b>全程最高垭口日遇中雨</b>——天路十八弯/卡子拉山/姊妹湖低温湿滑，降速防塌方",rd:false},
+      {t:"理塘4014m仅短停补给，<b>不贪玩、不宿、不剧烈运动</b>；午饭清淡；加满油",rd:false},
+      {t:"姊妹湖4500m仅观景不逗留；湖边无护栏，看护孩子勿近水",rd:false}
+    ],
+    budget:"油费¥180 + 住宿¥350×2间 + 餐饮¥600（理塘加满油）"
+  },
+  {
+    id:7, day:"Day 7", date:"8/11 ⚠️风险日", wx:"巴塘多云·格聂小雨多变", wxt:"risk",
+    route:"巴塘→(包当地四驱)→扎瓦拉垭口→热梯河谷→冷古寺→格聂之眼→则巴村(3900)",
+    km:"168km / 4–5h（四驱段）",
+    segments:[
+      {f:"巴塘→格聂入口",t:"扎瓦拉垭口（5020m）",d:"约50km",time:"约1.5h",road:"铺装但缺维护、多落石塌方，晴天快速通过、雨天慎行【乘当地四驱】"},
+      {f:"扎瓦拉垭口",t:"格木村→热梯河谷",d:"约20–30km",time:"约1h",road:"热梯河谷约10km<b>炮弹坑/碎石烂路</b>，≤20km/h慢行防托底【四驱】"},
+      {f:"热梯河谷",t:"则巴村→冷古寺→格聂之眼→则巴村",d:"约80–90km",time:"约2–2.5h",road:"格聂之眼段硬化窄路；则巴村修路通行困难【四驱】"}
+    ],
+    sum:"格聂南线 <b>约70%铺装+30%非铺装（炮弹坑/碎石/涉水）</b>，全程无加油站、90%无信号。<b style='color:#d64545'>别克GL8两驱不可通行，须在巴塘包当地四驱越野（含司机，约¥800–1200/天）进入；GL8停巴塘等待。</b>",
+    schedule:[
+      {t:"07:30",s:"巴塘换乘当地四驱进格聂南线（早出看天色决策）",du:"—",ti:"GL8留巴塘；四驱载全家"},
+      {t:"上午",s:"扎瓦拉垭口、格木村、热梯河谷",du:"3h",ti:"4000m+，随走随停，烂路慢行"},
+      {t:"中午",s:"冷古寺（老/新寺）",du:"1.5h",ti:"人文+雪山，尊重宗教"},
+      {t:"16:00",s:"则巴村入住，泡野温泉♨",du:"—",ti:"3900m，温泉因修路缩小"}
+    ],
+    stay:{nm:"则巴村·藏式民宿（优先）",pr:"¥300–600/间",nt:"格聂核心落脚点，村中民宿最多、可供氧、餐饮较全",fb:"可能断电/旱厕；多旱厕、备头灯/湿纸巾/自热锅"},
+    dining:"<b>餐饮</b>：自备自热锅/干粮（格聂核心区无餐厅）；则巴村民宿可提供简单家常菜，提前与老板说。",
+    parking:[
+      {n:"扎瓦拉垭口",u:QQ+"search?keyword=%E6%89%8E%E7%93%A6%E6%8B%89%E5%9E%AD%E5%8F%A3&referer=chuanxi2026"},
+      {n:"格聂之眼",u:QQ+"search?keyword=%E6%A0%BC%E8%80%BF%E4%B9%8B%E7%9C%BC&referer=chuanxi2026"},
+      {n:"冷古寺",u:QQ+"search?keyword=%E5%86%B7%E5%8F%A4%E5%AF%BA&referer=chuanxi2026"},
+      {n:"则巴村",u:QQ+"search?keyword=%E5%88%99%E5%B7%B4%E6%9D%91&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"<b>无信号+非铺装+雨季易塌方</b>；GL8两驱禁入，必须包当地四驱",rd:true},
+      {t:"<b>巴塘多云但进山小雨/多变即放弃</b>，改理塘周边；绝不停留硬闯",rd:true},
+      {t:"热梯河谷炮弹坑≤20km/h；格聂之眼马帮/越野费现场谈清含返程；孩子勿近湿地边缘",rd:false},
+      {t:"则巴村野温泉天然泉眼，<b>不让孩子独自靠近热水池/深水</b>；多旱厕断电备头灯",rd:false}
+    ],
+    budget:"格聂四驱包车¥800–1200 + 民宿¥450×2间 + 餐饮(自热锅自备)¥400"
+  },
+  {
+    id:8, day:"Day 8", date:"8/12", wx:"理塘小雨·新都桥多云", wxt:"rain",
+    route:"则巴村→(四驱)→铁匠山垭口(4860)→理塘(会合GL8)→新都桥(3460)",
+    km:"284km / 5–5.5h",
+    segments:[
+      {f:"则巴村",t:"铁匠山垭口（4860m）→格聂镇→理塘",d:"约87km",time:"约2h",road:"出村非铺装，后转铺装水泥下坡；理塘前部分塌方落石需避让【四驱段】"},
+      {f:"理塘",t:"新都桥（G318经剪子湾山）",d:"约165–200km",time:"约4h",road:"全程铺装下坡；折多山段弯急8月无积雪【GL8接手】"}
+    ],
+    sum:"合计 <b>约284km / 5–5.5h</b>（腾讯实测则巴村→新都桥 284.0km/322min）。<b style='color:#d64545'>铁匠山出村段仍非铺装，由当地四驱送至理塘；在理塘与GL8会合后GL8继续走G318到新都桥。</b>",
+    schedule:[
+      {t:"08:00",s:"则巴村→铁匠山垭口（4800m，乘四驱）",du:"2h",ti:"全线最高垭口，短停"},
+      {t:"11:00",s:"毛垭草原、格聂群峰远观",du:"1.5h",ti:"免费，花海季美"},
+      {t:"13:00",s:"理塘（4000m）与GL8会合、午饭补给",du:"1h",ti:"加满油"},
+      {t:"14:30",s:"理塘→新都桥（GL8，G318）",du:"4h",ti:"下坡为主"},
+      {t:"晚",s:"住新都桥舒适酒店",du:"—",ti:"3460m"}
+    ],
+    stay:{nm:"新都桥·舒适酒店",pr:"¥300–500/间",nt:"摄影小镇，经理塘途经不宿",fb:"旺季紧张提前订；镇上停车旺季紧张"},
+    dining:"<b>餐饮</b>：理塘午餐补给（GL8司机在此会合）；新都桥晚餐藏餐/川菜（小镇餐饮成熟）。",
+    parking:[
+      {n:"铁匠山垭口",u:QQ+"search?keyword=%E9%93%81%E5%8C%A0%E5%B1%B1%E5%9E%AD%E5%8F%A3&referer=chuanxi2026"},
+      {n:"毛垭大草原",u:QQ+"search?keyword=%E6%AF%9B%E5%9E%AD%E5%A4%A7%E8%8D%89%E5%8E%9F&referer=chuanxi2026"},
+      {n:"新都桥",u:QQ+"search?keyword=%E6%96%B0%E9%83%BD%E6%A1%A5&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"铁匠山4860m全线最高，<b>短停≤10min、不奔跑</b>；出村非铺装雨后泥泞慢行",rd:false},
+      {t:"毛垭草原湿地陷车，车停硬化处；雨后草甸泥泞别让孩子乱跑陷脚",rd:false},
+      {t:"本日驾驶较长，嫌累可升11天（理塘单独住一晚）",rd:false}
+    ],
+    budget:"油费¥150 + 住宿¥400×2间 + 餐饮¥600（四驱段已含在D7包车）"
+  },
+  {
+    id:9, day:"Day 9", date:"8/13", wx:"新都桥中雨·丹巴/小金小雨", wxt:"mid",
+    route:"新都桥→丹巴甲居藏寨→四姑娘山(3200)",
+    km:"270km / 6–7h",
+    segments:[
+      {f:"新都桥",t:"丹巴（G248）",d:"147.1km",time:"约3h",road:"铺装柏油，川西小环线最好段之一（腾讯实测147.1km/179min）"},
+      {f:"丹巴",t:"四姑娘山镇（S303→G350）",d:"约120km",time:"约3h",road:"S303山区弯多路窄、雨季湿滑；甲居寨内窄路会车留意"}
+    ],
+    sum:"合计 <b>约270km / 6–7h</b>。G248低风险；丹巴→四姑娘山 🟡 中等风险（弯多、雨后湿滑）。",
+    schedule:[
+      {t:"08:30",s:"新都桥→丹巴甲居藏寨（门票约¥50）",du:"3h",ti:"藏寨风光"},
+      {t:"13:00",s:"丹巴→四姑娘山镇（中国熊猫大道G350）",du:"3h",ti:"3200m"},
+      {t:"晚",s:"住四姑娘山镇，约定双桥沟票",du:"—",ti:"次日进沟"}
+    ],
+    stay:{nm:"四姑娘山镇·舒适酒店",pr:"¥350–600/间",nt:"旺季紧张，提前订；次日进双桥沟",fb:"四姑娘山镇（3200m），fallback 无"},
+    dining:"<b>餐饮</b>：丹巴藏寨农家乐（藏家宴、老腊肉、野菜）；四姑娘山镇川菜/藏餐，镇上选择多。",
+    parking:[
+      {n:"甲居藏寨",u:QQ+"search?keyword=%E7%94%B2%E5%B1%85%E8%97%8F%E5%AF%A8&referer=chuanxi2026"},
+      {n:"丹巴县",u:QQ+"search?keyword=%E4%B8%B9%E5%B7%B4%E5%8E%BF&referer=chuanxi2026"},
+      {n:"四姑娘山镇",u:QQ+"search?keyword=%E5%9B%9B%E5%A7%91%E5%A8%98%E5%B1%B1%E9%95%87&referer=chuanxi2026",rt:true},
+      {n:"猫鼻梁观景台",u:QQ+"search?keyword=%E7%8C%AB%E9%BC%BB%E6%A2%81%E8%A7%82%E6%99%AF%E5%8F%B0&referer=chuanxi2026"}
+    ],
+    avoid:[
+      {t:"<b>全天小雨</b>，G248/G350弯道湿滑，降速、鸣笛、不强行超车",rd:false},
+      {t:"甲居寨内路窄会车难，<b>车停景区大门乘观光车入寨</b>；门票提前购",rd:false},
+      {t:"猫鼻梁大巴多即拍即走勿占道；雨天云厚可能看不到幺妹峰，降低预期",rd:false}
+    ],
+    budget:"油费¥200 + 甲居¥50×4 + 住宿¥450×2间 + 餐饮¥600"
+  },
+  {
+    id:10, day:"Day 10", date:"8/14", wx:"小金小雨·成都/合肥多云", wxt:"rain",
+    route:"四姑娘山双桥沟→成都(211km)→飞合肥",
+    km:"211km / 3h",
+    segments:[
+      {f:"四姑娘山",t:"成都（G350中国熊猫大道）",d:"211.4km",time:"约3h",road:"全程柏油（腾讯实测211.4km/187min）；卧龙段弯道密集，8月偶发小型塌方，上午早出"},
+      {f:"成都",t:"合肥（航班）",d:"飞行≈2.5h",time:"—",road:"还车后赴机场，建议傍晚后航班"}
+    ],
+    sum:"合计 <b>约211km / 3h</b>。巴朗山隧道（约15.8km）穿山，雨季垭口易起团雾开应急灯。",
+    schedule:[
+      {t:"08:00",s:"双桥沟（门票¥80+观光车¥70，3–4h）",du:"4h",ti:"红杉林/布达拉峰/撵鱼坝"},
+      {t:"13:00",s:"返成都（G350映秀方向）",du:"3h",ti:"上午早出避午后雨，不夜路"},
+      {t:"17:00",s:"还车，赴机场飞合肥",du:"2.5h",ti:"结束行程"}
+    ],
+    stay:{nm:"—（返程日，无住宿）",pr:"—",nt:"成都还车后直接飞合肥",fb:"如航班晚，可在成都住一晚"},
+    dining:"<b>餐饮</b>：双桥沟内简餐/自带；成都返程前吃顿好的（火锅/川菜收尾）。",
+    parking:[
+      {n:"四姑娘山双桥沟",u:QQ+"search?keyword=%E5%8F%8C%E6%A1%A5%E6%B2%9F&referer=chuanxi2026"},
+      {n:"成都双流机场",u:QQ+"search?keyword=%E6%88%90%E9%83%BD%E5%8F%8C%E6%B5%81%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA&referer=chuanxi2026",rt:true}
+    ],
+    avoid:[
+      {t:"双桥沟门票提前「阿坝旅游网」预约（当日14:30前）；撵鱼坝栈道<b>看护孩子勿近水</b>",rd:false},
+      {t:"G350上午早出避午后雨，<b>不夜路赶航班</b>",rd:false},
+      {t:"映秀是地震遗址纪念地，带孩子参观保持庄重；补给即走",rd:false}
+    ],
+    budget:"双桥沟¥150×4 + 油费¥150 + 机票¥700–1300/人"
+  }
+];
+
+const daylist = document.getElementById('daylist');
+DAYS.forEach(d=>{
+  const el = document.createElement('div');
+  el.className='sec';
+  el.innerHTML = `<div class="card day" onclick="openDay(${d.id})">
+    <div class="day-h"><span class="d">${d.day} · ${d.date}</span><span class="wb ${d.wxt}">${d.wx}</span></div>
+    <div class="route"><span class="km">${d.km}</span> ${d.route}</div>
+    <div class="more">查看当日详情（路线/路况/住宿/餐饮/停车导航/避坑）</div>
+  </div>`;
+  daylist.appendChild(el);
+});
+
+function openDay(id){
+  const d = DAYS.find(x=>x.id===id);
+  const seg = d.segments.map(s=>`<tr><td>${s.f} → ${s.t}</td><td>${s.d}</td><td>${s.time}</td><td>${s.road}</td></tr>`).join('');
+  const sch = d.schedule.map(s=>`<div class="tl-i"><div class="t">${s.t}</div><div class="s">${s.s}</div><div class="du">⏱ ${s.du}</div><div class="ti">${s.ti}</div></div>`).join('');
+  const park = d.parking.map(p=>`<a class="${p.rt?'rt':''}" href="${p.u}">📍${p.n}</a>`).join('');
+  const av = d.avoid.map(a=>`<div class="av ${a.rd?'rd':''}">⚠️ <b>避开</b>：${a.t}</div>`).join('');
+  const detail = document.getElementById('detail');
+  detail.innerHTML = `
+    <div class="back" onclick="closeDay()">返回行程总览</div>
+    <div class="dhero">
+      <div class="dd">${d.day} · ${d.date}</div>
+      <div class="dr">${d.route}</div>
+    </div>
+    <div class="block">
+      <h3><span class="ic">🌦️</span>天气</h3>
+      <span class="wxbadge wb ${d.wxt}">${d.wx}</span>
+    </div>
+    <div class="block">
+      <h3><span class="ic">🚗</span>当日路线 & 路况</h3>
+      <table class="rt"><tr><th>路段</th><th>距离</th><th>耗时</th><th>路面 / 路况</th></tr>${seg}</table>
+      <div class="sum">${d.sum}</div>
+    </div>
+    <div class="block">
+      <h3><span class="ic">⏱️</span>建议游玩时间</h3>
+      <div class="tl">${sch}</div>
+    </div>
+    <div class="block">
+      <h3><span class="ic">🏨</span>推荐住宿</h3>
+      <div class="stay"><div class="nm">${d.stay.nm}</div><div class="pr">${d.stay.pr}</div><div class="nt">${d.stay.nt}</div><div class="fb">📌 ${d.stay.fb}</div></div>
+    </div>
+    <div class="block">
+      <h3><span class="ic">🍜</span>餐饮指导</h3>
+      <div class="din">${d.dining}</div>
+    </div>
+    <div class="block">
+      <h3><span class="ic">🅿️</span>停车 / 导航目的地</h3>
+      <div class="pnav">${park}</div>
+    </div>
+    <div class="block">
+      <h3><span class="ic">⛔</span>避开事项</h3>
+      ${av}
+    </div>
+    <div class="block">
+      <h3><span class="ic">💰</span>本日预算</h3>
+      <div class="food2">${d.budget}</div>
+    </div>
+    <div class="disc">⚠️ 以上为公开资料整理，票价/预约/路况以官方为准；腾讯地图链接点开即在App拉起导航，坐标多为经验值，最终以App为准。</div>
+  `;
+  document.getElementById('overview').classList.add('hidden');
+  detail.classList.add('show');
+  window.scrollTo(0,0);
+}
+function closeDay(){
+  document.getElementById('overview').classList.remove('hidden');
+  document.getElementById('detail').classList.remove('show');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
