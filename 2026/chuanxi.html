@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>川西10日亲子自驾大环线 · 行程规划 v6</title>
+<style>
+  :root{
+    --indigo:#6366f1; --indigo-d:#4f46e5;
+    --teal:#0ea5a4; --blue:#3b82f6;
+    --amber:#f59e0b; --pink:#ec4899; --emerald:#10b981;
+    --ink:#0f172a; --sub:#64748b; --line:#e6e9f2;
+    --card:#ffffff; --soft:#f6f9fc;
+    --shadow:0 10px 30px -12px rgba(50,40,120,.25);
+    --shadow-sm:0 2px 10px -4px rgba(50,40,120,.25);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink); background:#f6f9fc;
+    -webkit-font-smoothing:antialiased; line-height:1.5;
+    background-image:
+      radial-gradient(900px 500px at 12% -8%, rgba(99,102,241,.16), transparent 60%),
+      radial-gradient(800px 480px at 88% 4%, rgba(14,165,164,.14), transparent 58%),
+      radial-gradient(700px 500px at 60% 120%, rgba(236,72,153,.10), transparent 60%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1340px; margin:0 auto; padding:22px 22px 60px}
+
+  /* ---------- Banner ---------- */
+  .banner{
+    position:relative; overflow:hidden;
+    background:linear-gradient(135deg,#ffffff 0%, #f3f1ff 55%, #eafffb 100%);
+    border:1px solid var(--line); border-radius:24px;
+    padding:34px 38px; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:26px; flex-wrap:wrap;
+  }
+  .banner::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(420px 200px at 90% -30%, rgba(99,102,241,.18), transparent 70%),
+      radial-gradient(360px 200px at 6% 130%, rgba(14,165,164,.16), transparent 70%);
+    pointer-events:none;
+  }
+  .banner-txt{flex:1 1 360px; min-width:300px; position:relative}
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:600; letter-spacing:.5px; color:var(--indigo-d);
+    background:rgba(99,102,241,.10); border:1px solid rgba(99,102,241,.18);
+    padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 4px rgba(99,102,241,.18)}
+  h1.title{
+    font-size:38px; line-height:1.15; font-weight:800; letter-spacing:-.5px;
+    background:linear-gradient(100deg,#4f46e5 0%, #6366f1 35%, #0ea5a4 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .subtitle{margin-top:10px; color:var(--sub); font-size:14.5px; max-width:600px}
+  .subtitle b{color:#334155}
+
+  .badges{display:flex; gap:14px; flex-wrap:wrap; position:relative}
+  .badge{
+    background:#fff; border:1px solid var(--line); border-radius:18px;
+    padding:14px 20px; min-width:128px; box-shadow:var(--shadow-sm);
+    position:relative; overflow:hidden;
+  }
+  .badge::after{content:"";position:absolute;right:-20px;top:-20px;width:70px;height:70px;border-radius:50%;opacity:.14}
+  .badge.b1::after{background:var(--indigo)} .badge.b2::after{background:var(--teal)} .badge.b3::after{background:var(--amber)}
+  .badge .num{font-size:26px; font-weight:800; color:var(--ink); line-height:1}
+  .badge .lbl{margin-top:6px; font-size:12.5px; color:var(--sub); font-weight:600}
+  .badge .ico{position:absolute; right:14px; top:12px; font-size:18px; opacity:.55}
+
+  /* ---------- Tabs ---------- */
+  .tabs{
+    display:flex; gap:8px; margin:22px 0 18px; overflow-x:auto; padding:4px 2px 8px;
+    scrollbar-width:thin;
+  }
+  .tab{
+    flex:0 0 auto; cursor:pointer; user-select:none;
+    border:1px solid var(--line); background:#fff; color:#475569;
+    padding:9px 16px; border-radius:999px; font-size:14px; font-weight:600;
+    transition:.18s; white-space:nowrap; box-shadow:var(--shadow-sm);
+  }
+  .tab:hover{border-color:var(--indigo); color:var(--indigo-d)}
+  .tab .d{font-weight:800}
+  .tab .dt{font-size:11px; color:#94a3b8; font-weight:600; margin-left:6px}
+  .tab.active{
+    background:linear-gradient(135deg,var(--indigo),var(--indigo-d)); color:#fff; border-color:transparent;
+    box-shadow:0 8px 20px -8px rgba(99,102,241,.7);
+  }
+  .tab.active .dt{color:rgba(255,255,255,.8)}
+  .tab.risk .dt{color:#ef4444}
+  .tab.risk.active{background:linear-gradient(135deg,#f97316,#ef4444)}
+
+  /* ---------- Main grid ---------- */
+  .grid{display:grid; grid-template-columns:minmax(380px,1fr) minmax(440px,1.05fr); gap:22px; align-items:start}
+  @media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
+  .panel{background:#fff; border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow)}
+  .day-head{padding:18px 22px; border-bottom:1px solid var(--line); border-radius:22px 22px 0 0;
+    background:linear-gradient(135deg,#fbfaff,#f4fbfa)}
+  .day-head .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .day-head h2{font-size:20px; font-weight:800}
+  .day-head .date{font-size:13px; color:var(--sub); font-weight:600; background:#fff; border:1px solid var(--line); padding:3px 10px; border-radius:999px}
+  .day-head .route{display:flex; align-items:center; gap:8px; margin-top:10px; flex-wrap:wrap}
+  .wh{display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:#334155;
+    background:#fff; border:1px solid var(--line); padding:5px 11px; border-radius:10px; text-decoration:none; transition:.15s}
+  .wh:hover{border-color:var(--teal); color:var(--teal); box-shadow:var(--shadow-sm)}
+  .wh .e{font-size:15px}
+  .navbtn{margin-left:auto; text-decoration:none; font-size:13px; font-weight:700; color:#fff;
+    background:linear-gradient(135deg,var(--indigo),var(--indigo-d)); padding:7px 13px; border-radius:10px;
+    box-shadow:var(--shadow-sm); transition:.18s; white-space:nowrap}
+  .navbtn:hover{filter:brightness(1.06); transform:translateY(-1px)}
+  .risk-tag{font-size:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,#f97316,#ef4444); padding:4px 11px; border-radius:999px}
+
+  /* timeline */
+  .timeline{padding:14px 18px 20px; max-height:72vh; overflow-y:auto; scrollbar-width:thin}
+  .card{
+    position:relative; display:flex; gap:14px; padding:13px 14px 13px 16px; margin:10px 4px;
+    background:var(--soft); border:1px solid var(--line); border-radius:16px; cursor:pointer;
+    transition:.18s; overflow:hidden;
+  }
+  .card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--c)}
+  .card:hover{transform:translateY(-2px); box-shadow:var(--shadow-sm); border-color:var(--c)}
+  .card.active{box-shadow:0 0 0 2px var(--c), var(--shadow-sm); background:#fff}
+  .card .time{flex:0 0 56px; font-weight:800; font-size:14px; color:#334155; padding-top:2px}
+  .card .body{flex:1; min-width:0}
+  .card .name{font-weight:700; font-size:15px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .tag{font-size:11px; font-weight:800; color:#fff; padding:2px 8px; border-radius:999px; background:var(--c)}
+  .card .desc{margin-top:5px; font-size:13px; color:var(--sub); line-height:1.5}
+  .card .meta{margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+  .pill{font-size:11.5px; color:#475569; background:#fff; border:1px solid var(--line); padding:3px 9px; border-radius:999px; font-weight:600}
+  .pin{margin-left:auto; text-decoration:none; font-size:12px; font-weight:700; color:var(--indigo-d);
+    border:1px solid rgba(99,102,241,.3); background:rgba(99,102,241,.07); padding:4px 10px; border-radius:999px; transition:.15s}
+  .pin:hover{background:var(--indigo); color:#fff; border-color:transparent}
+
+  /* legend */
+  .legend{display:flex; gap:14px; flex-wrap:wrap; padding:12px 20px 4px; font-size:12.5px; color:var(--sub); font-weight:600}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .legend i{width:11px;height:11px;border-radius:50%; display:inline-block}
+
+  /* map */
+  .map-panel{position:sticky; top:16px}
+  .map-box{position:relative; padding:10px}
+  .map-svg{width:100%; height:auto; display:block; border-radius:16px;
+    background:linear-gradient(160deg,#eef4ff 0%, #f3fbff 50%, #eafff7 100%); border:1px solid var(--line)}
+  #vp{transition:transform .85s cubic-bezier(.22,1,.36,1); transform-origin:0 0}
+  .map-cap{position:absolute; left:18px; bottom:18px; font-size:11.5px; color:#64748b;
+    background:rgba(255,255,255,.86); border:1px solid var(--line); padding:6px 11px; border-radius:10px; backdrop-filter:blur(4px)}
+  .map-legend{position:absolute; right:18px; top:18px; background:rgba(255,255,255,.9); border:1px solid var(--line);
+    border-radius:12px; padding:9px 11px; font-size:11.5px; color:#475569; backdrop-filter:blur(4px); box-shadow:var(--shadow-sm)}
+  .map-legend div{display:flex; align-items:center; gap:6px; margin:3px 0}
+  .map-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .map-title{position:absolute; left:18px; top:18px; font-size:13px; font-weight:800; color:#334155;
+    background:rgba(255,255,255,.9); border:1px solid var(--line); padding:6px 12px; border-radius:10px; backdrop-filter:blur(4px)}
+  .compass{position:absolute; right:18px; bottom:18px; width:42px;height:42px; border-radius:50%;
+    background:rgba(255,255,255,.9); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:#475569; font-weight:800; box-shadow:var(--shadow-sm)}
+  .compass b{color:var(--indigo-d)}
+  marker text, .mk-label{font-size:12px; font-weight:800; fill:#334155; paint-order:stroke; stroke:#fff; stroke-width:3px}
+
+  .foot{margin-top:26px; font-size:12.5px; color:#94a3b8; text-align:center; line-height:1.7}
+  .foot b{color:#64748b}
+  .note{margin-top:14px; background:#fffaf0; border:1px solid #ffe2b8; color:#92600a;
+    border-radius:14px; padding:12px 16px; font-size:12.5px; line-height:1.6}
+  .note b{color:#7c4a02}
+  .note.green{background:#f0fdf7; border-color:#b6f0d8; color:#0b6b4d}
+  .note.green b{color:#0b6b4d}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- BANNER -->
+  <header class="banner">
+    <div class="banner-txt">
+      <span class="kicker"><span class="dot"></span>2026 暑假 · 川西大环线 · v6</span>
+      <h1 class="title">川西10日亲子自驾大环线</h1>
+      <p class="subtitle">2 家庭 6 人｜8/5 成都取车 · 8/6 出发自驾 ｜ <b>别克 GL8（禁格聂南线）</b> · 阶梯适应海拔 · 民宿优先 · 雨季出行。<b>已删除天空之城</b>，导航与天气均可点击查看。</p>
+    </div>
+    <div class="badges">
+      <div class="badge b1"><div class="ico">🗓️</div><div class="num" id="bDays">10</div><div class="lbl">行程天数 / DAY</div></div>
+      <div class="badge b2"><div class="ico">📍</div><div class="num" id="bPoi">—</div><div class="lbl">POI 数</div></div>
+      <div class="badge b3"><div class="ico">💰</div><div class="num">3.8–5.8万</div><div class="lbl">总预算（6人）</div></div>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tabs" id="tabs"></nav>
+
+  <!-- GRID -->
+  <div class="grid">
+    <!-- LEFT: timeline -->
+    <section class="panel">
+      <div class="day-head">
+        <div class="row">
+          <h2 id="dTitle">—</h2>
+          <span class="date" id="dDate">—</span>
+          <span class="risk-tag" id="dRisk" style="display:none">⚠️ 风险日</span>
+        </div>
+        <div class="route">
+          <a class="wh" id="dWeather" href="#" target="_blank" rel="noopener" title="点击查看该地实时天气"><span class="e">🌤️</span><span>—</span></a>
+          <a class="navbtn" id="dNav" href="#" target="_blank" rel="noopener">🧭 腾讯地图全程导航</a>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#6366f1"></i>景点 / 自然</span>
+        <span><i style="background:#f59e0b"></i>美食</span>
+        <span><i style="background:#ec4899"></i>文化 / 历史</span>
+        <span><i style="background:#10b981"></i>补给 / 住宿</span>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <!-- RIGHT: map -->
+    <section class="panel map-panel">
+      <div class="map-box">
+        <div class="map-title" id="mTitle">全程路线</div>
+        <svg class="map-svg" id="map" viewBox="0 0 900 640" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="routeGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="55%" stop-color="#0ea5a4"/>
+              <stop offset="100%" stop-color="#ec4899"/>
+            </linearGradient>
+            <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <g id="vp"></g>
+        </svg>
+        <div class="map-legend">
+          <div><i style="background:#6366f1"></i>景点</div>
+          <div><i style="background:#f59e0b"></i>美食</div>
+          <div><i style="background:#ec4899"></i>文化</div>
+          <div><i style="background:#10b981"></i>补给</div>
+        </div>
+        <div class="compass">N ↑<br><b>川西</b></div>
+        <div class="map-cap">示意图：点击卡片 / marker 飞至坐标 · 灰线为全程 · 彩色为当日路线</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="note">
+    🌧️ <b>雨季提醒</b>：8 月初为川西汛期，午后多雷阵雨；<b>D5（进高原最高垭口日遇雨）</b>、<b>D6（巴塘小雨 + 格聂北线）</b> 为天气风险最高段，D8 全天小雨也需降速。天气数据为川西 8 月汛期气候规律整理，<b>出行前 3–5 天请点击顶部天气胶囊二次核实实时预报</b>。高原垭口实况与县城差异大，一律保暖防风、早出早回。
+  </div>
+
+  <div class="note green">
+    🗺️ <b>导航说明</b>：每个 POI 的「🧭 导航」按钮与每日「全程导航」均按<b>精确经纬度</b>拉起腾讯地图驾车导航（奥维/高德离线地图可直接手动打点坐标，避免地名解析出错）。GL8 两驱<b>禁格聂南线</b>，则巴村走北线（格聂镇）南延进入。
+  </div>
+
+  <div class="foot">
+    数据来源：《川西10日路线最优规划 终极版 v6》+ 《川西10日线路天气查询图表》（2026-07-12 回填）<br>
+    地图为<b>自包含路线示意图</b>（按真实经纬度投影，无需联网/密钥即可打开）；点击 POI「导航」或顶部「全程导航」可在微信/腾讯地图内拉起实时驾车导航；点击天气胶囊可查实时天气。
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   数据模型：每天 POI（cat: view景点 / food美食 / culture文化 / shop补给住宿）
+   coord: [经度 lng, 纬度 lat]（真实坐标，用于投影打点 & 导航）
+   ============================================================ */
+const CAT = {
+  view:   {label:'景点', color:'#6366f1'},
+  food:   {label:'美食', color:'#f59e0b'},
+  culture:{label:'文化', color:'#ec4899'},
+  shop:   {label:'补给', color:'#10b981'}
+};
+
+/* 每日全程导航起讫点：[lat, lng, 名称]（按精确坐标拉起腾讯地图 routeplan） */
+const DAY_ROUTES = {
+  0:  [[30.5728,104.0668,'成都取车点'],[30.5728,104.0668,'成都']],
+  1:  [[30.5728,104.0668,'成都'],[30.05,101.96,'康定']],
+  2:  [[30.05,101.96,'康定'],[30.31,101.49,'姑弄村']],
+  3:  [[30.31,101.49,'姑弄村'],[29.8441,101.5606,'甲根坝镇']],
+  4:  [[29.8441,101.5606,'甲根坝镇'],[30.03,101.00,'雅江']],
+  5:  [[30.03,101.00,'雅江'],[30.00,99.10,'巴塘']],
+  6:  [[30.00,99.10,'巴塘'],[29.738343,99.653741,'见山·喇让仓民宿(则巴村)']],
+  7:  [[29.738343,99.653741,'则巴村'],[30.07,101.53,'新都桥']],
+  8:  [[30.07,101.53,'新都桥'],[31.00,102.93,'四姑娘山镇']],
+  9:  [[31.00,102.93,'四姑娘山镇'],[30.5728,104.0668,'成都']],
+  10: [[30.5728,104.0668,'成都'],[30.5728,104.0668,'成都']]
+};
+
+/* 每日天气文本 + 主县城（用于实时天气链接） */
+const WEATHER = {
+  0:  {e:'🌧️', t:'成都 中雨 24-31℃ · 高速正常', w:'成都'},
+  1:  {e:'🌧️', t:'天全/泸定多云 · 康定中雨15-21℃（折多山可能起雾·雅康高速湿滑）', w:'康定'},
+  2:  {e:'🌧️', t:'康定中雨 15-21℃ · 高山段估低8-12℃、雨雾（S434湿滑）', w:'康定'},
+  3:  {e:'⛅', t:'康定多云 / 道孚小雨 · 甲根坝乡道良好（午后可飘雨）', w:'道孚'},
+  4:  {e:'🌧️', t:'雅江中雨 15-28℃ · G248 整体良好', w:'雅江'},
+  5:  {e:'⚠️', t:'雅江中雨 / 理塘中雨 / 巴塘小雨 · 垭口低温湿滑防塌方', w:'理塘'},
+  6:  {e:'⚠️', t:'巴塘多云 / 格聂小雨(估)11-20 · 风险日·GL8禁南线', w:'巴塘'},
+  7:  {e:'⛅', t:'理塘小雨 / 新都桥多云 · 出格聂后转好', w:'理塘'},
+  8:  {e:'⚠️', t:'新都桥中雨 / 丹巴小雨 / 小金小雨 · G350/丹巴段湿滑', w:'丹巴'},
+  9:  {e:'⛅', t:'小金小雨~多云 / 成都多云 · 上午早出避午后雨', w:'小金'},
+  10: {e:'⛅', t:'成都多云 23-30℃ · 正常', w:'成都'}
+};
+
+const DAYS = [
+  { day:0, date:'8/5', title:'预备 · 成都取车适应（不计入行程天数）', risk:false,
+    pois:[
+      {t:'下午', name:'合肥飞抵成都', cat:'shop', lng:104.0668, lat:30.5728, desc:'2 家庭 6 人抵成都（海拔 500m），休整适应，不赶山路。'},
+      {t:'下午', name:'成都取别克 GL8', cat:'shop', lng:104.08, lat:30.66, desc:'验车况/轮胎、确认含高原险；GL8 两驱禁格聂南线，合同标注。'},
+      {t:'下午', name:'超市补给（氧气/红景天/水/零食）', cat:'shop', lng:104.05, lat:30.62, desc:'氧气每人 2–3 罐、红景天、现金；早取车早补给。'},
+      {t:'晚', name:'住成都舒适酒店', cat:'shop', lng:104.07, lat:30.60, desc:'海拔 500m，早休息、不洗澡洗头，为高原蓄力。'}
+    ]},
+  { day:1, date:'8/6', title:'成都 → 天全 → 泸定桥 → 康定', risk:false,
+    pois:[
+      {t:'08:00', name:'成都出发（雅康高速）', cat:'shop', lng:104.0668, lat:30.5728, desc:'早出避雨，隧道限速 80，提前下离线地图。'},
+      {t:'10:30', name:'天全服务区（网红服务区）', cat:'shop', lng:102.78, lat:30.07, desc:'设施完善免费打卡，🔴 加满油、补给——进高原前最后大服务区站。'},
+      {t:'12:30', name:'泸定桥（铁索桥·红色地标）', cat:'culture', lng:102.233, lat:29.91, desc:'门票约¥10，横跨大渡河；桥面晃动注意看护娃。停留约 1h。'},
+      {t:'15:00', name:'康定情歌广场 / 溜溜城', cat:'culture', lng:101.96, lat:30.05, desc:'夜游轻松，适应高原；首晚别洗澡洗头。'},
+      {t:'晚', name:'康定美食（藏餐/牦牛汤锅）', cat:'food', lng:101.95, lat:30.04, desc:'高原适应性餐饮，热食暖身。'},
+      {t:'晚', name:'住康定供氧酒店', cat:'shop', lng:101.97, lat:30.06, desc:'海拔 2560m，首晚高原，选供氧房。'}
+    ]},
+  { day:2, date:'8/7', title:'康定 → S434 → 中谷 → 木格措 → 八朗生都 → 姑弄村', risk:false,
+    pois:[
+      {t:'08:00', name:'中谷村（温泉村）', cat:'view', lng:101.78, lat:30.22, desc:'S434 沿线温泉村，可免费泡脚放松，缓解初上高原，约 0.5h。'},
+      {t:'10:00', name:'木格措（康定情歌风景区·3780m）', cat:'view', lng:101.83, lat:30.28, desc:'高山湖+温泉，门票¥105~110+观光车¥90；游玩 2.5~3h，不剧烈运动。'},
+      {t:'13:00', name:'康定机场路观景台（4280m）', cat:'view', lng:101.42, lat:30.16, desc:'公路与雅拉/贡嘎同框大片机位；🔴 仅车览不逗留（去重原则）。'},
+      {t:'15:00', name:'八朗生都观景台（4200m）', cat:'view', lng:101.4634, lat:30.3265, desc:'360° 看雅拉/贡嘎群峰，清洁费约¥30/人；v6 唯一高海拔停留点，短停≤0.5h。'},
+      {t:'17:00', name:'姑弄村藏家晚餐', cat:'food', lng:101.49, lat:30.31, desc:'雅拉雪山下的溪流草甸，藏家晚餐，亲子奔跑友好。'},
+      {t:'晚', name:'住姑弄村民宿', cat:'shop', lng:101.49, lat:30.31, desc:'海拔 3600m，溪流草甸牦牛，民宿体验夜。'}
+    ]},
+  { day:3, date:'8/8', title:'姑弄村 → 墨石公园(八美) → 塔公 → 甲根坝镇', risk:false,
+    pois:[
+      {t:'08:30', name:'姑弄村清晨草甸 / 溪流', cat:'view', lng:101.49, lat:30.31, desc:'民宿周边免费，孩子可奔跑，雪山倒影。'},
+      {t:'10:00', name:'墨石公园（八美·糜棱岩石林）', cat:'view', lng:101.49, lat:30.36, desc:'中国唯一高原石林"异域星球"，门票¥60+观光车¥20，可喂土拨鼠（孩子最爱）。'},
+      {t:'13:00', name:'塔公草原 / 塔公寺（雅拉雪山）', cat:'culture', lng:101.50, lat:30.28, desc:'塔公寺+雅拉雪山背景，骑马¥100~150/人，草原开阔亲子友好。'},
+      {t:'15:30', name:'甲根坝镇草甸湖畔', cat:'view', lng:101.5606, lat:29.8441, desc:'俄色花海/高山草甸湖畔，小众出片；🔴 勿搜"甲根措"，用坐标 101.5606,29.8441。'},
+      {t:'晚', name:'甲根坝美食', cat:'food', lng:101.561, lat:29.844, desc:'草甸民宿慢餐，看星。'},
+      {t:'晚', name:'住甲根坝镇民宿', cat:'shop', lng:101.5606, lat:29.8441, desc:'海拔 3800m，🔴 塔公/康定加满油再南下（站少不稳）。'}
+    ]},
+  { day:4, date:'8/9', title:'甲根坝镇 → 雅江（降海拔回血）', risk:false,
+    pois:[
+      {t:'上午', name:'甲根坝收尾漫步', cat:'view', lng:101.5606, lat:29.8441, desc:'清晨草甸湖畔收尾约 0.5h，拍照出片。'},
+      {t:'中午', name:'抵雅江（G248 直插西）', cat:'shop', lng:101.00, lat:30.03, desc:'甲根坝→G248→雅江约 100km/2h，零折返日。'},
+      {t:'下午', name:'雅江逛吃休整', cat:'food', lng:101.00, lat:30.03, desc:'下撤到 2600m 主动回血，热食补充体力。'},
+      {t:'晚', name:'住雅江舒适酒店', cat:'shop', lng:101.00, lat:30.03, desc:'海拔 2600m，🔴 雅江县城满油。'}
+    ]},
+  { day:5, date:'8/10', title:'雅江 → 天路十八弯 → 理塘 → 姊妹湖 → 巴塘', risk:false,
+    pois:[
+      {t:'08:00', name:'天路十八弯（318 发卡弯）', cat:'view', lng:100.30, lat:29.92, desc:'318 经典 U 型发卡弯，观景台免费停车，下车即走（高反高发，≤10min）。'},
+      {t:'11:00', name:'理塘（天空之城·4014m）', cat:'culture', lng:100.27, lat:30.00, desc:'西城门打卡、"丁真家乡"；吃午饭，不贪玩、不宿。'},
+      {t:'11:30', name:'理塘加油补给', cat:'shop', lng:100.26, lat:30.01, desc:'🔴 务必加满油——翻海子山前最后大补给点。'},
+      {t:'13:00', name:'姊妹湖 / 海子山（4500m）', cat:'view', lng:99.92, lat:30.13, desc:'"天神滴落的蓝眼泪"，全线最高点；仅观景、不逗留。'},
+      {t:'15:30', name:'巴塘晚餐', cat:'food', lng:99.10, lat:30.00, desc:'降到 2580m 低海拔，恢复用餐。'},
+      {t:'晚', name:'住巴塘舒适酒店', cat:'shop', lng:99.10, lat:30.00, desc:'海拔 2580m，🔴 进格聂前最后可靠满油大站。'}
+    ]},
+  { day:6, date:'8/11', title:'巴塘 → 理塘 → 格聂北线 → 则巴村（见山·喇让仓）', risk:true,
+    pois:[
+      {t:'上午', name:'巴塘出发满油', cat:'shop', lng:99.10, lat:30.00, desc:'🔴 出发前强制满油；格聂段无站。'},
+      {t:'中午', name:'理塘补给（北线入口前）', cat:'shop', lng:100.27, lat:30.00, desc:'经 G318 回理塘补满油，再转入格聂北线。'},
+      {t:'下午', name:'格聂镇（喇嘛垭·北线入口）', cat:'view', lng:99.8208, lat:29.831, desc:'经此向南进入格聂环线；🔴 北线南延避南线炮弹坑。'},
+      {t:'下午', name:'冷古寺（格聂四宝）', cat:'culture', lng:99.72, lat:29.80, desc:'格聂神山脚下人文，藏传佛教第一世噶玛巴创建；可请喇嘛看"格聂四宝"，约 1.5h。'},
+      {t:'傍晚', name:'见山·喇让仓民宿（则巴村）', cat:'shop', lng:99.653741, lat:29.738343, desc:'🟡 住宿导航目的地（则巴村1组11号）；格聂七峰+则巴密境躺看雪山，供氧房。'},
+      {t:'晚', name:'则巴村格聂七峰观景', cat:'view', lng:99.66, lat:29.74, desc:'民宿院子躺看雪山；🔴 末段机耕道无雨才过、≤20km/h，遇雨改住理塘。'}
+    ]},
+  { day:7, date:'8/12', title:'则巴村 → 格聂之眼 → 铁匠山 → 理塘 → 新都桥', risk:false,
+    pois:[
+      {t:'08:00', name:'格聂之眼（大地瞳孔）', cat:'view', lng:99.7606, lat:29.7949, desc:'🟡 用坐标；需无人机航拍倒影最美，约 0.5h。'},
+      {t:'09:30', name:'铁匠山垭口（4860m）', cat:'view', lng:99.88, lat:29.93, desc:'翻越后俯瞰格聂群峰全景，短停即走。'},
+      {t:'11:00', name:'毛垭大草原（花海季）', cat:'view', lng:100.30, lat:30.05, desc:'理塘旁无边绿毯，6~8 月花海，免费停车野餐。'},
+      {t:'13:00', name:'理塘补给 / 午饭', cat:'shop', lng:100.27, lat:30.00, desc:'途经加满油、午饭，不宿。'},
+      {t:'晚', name:'新都桥餐饮', cat:'food', lng:101.53, lat:30.07, desc:'"摄影家天堂"小镇，傍晚到镇轻松逛、用餐。'},
+      {t:'晚', name:'住新都桥舒适酒店', cat:'shop', lng:101.53, lat:30.07, desc:'海拔 3460m，摄影小镇，⛽ 有站。'}
+    ]},
+  { day:8, date:'8/13', title:'新都桥 → 丹巴(甲居) → 四姑娘山', risk:false,
+    pois:[
+      {t:'08:30', name:'甲居藏寨（丹巴·中国最美乡村）', cat:'culture', lng:101.86, lat:30.90, desc:'古碉楼+田园藏寨，门票约¥50；寨内窄路慢行。'},
+      {t:'13:00', name:'丹巴 → 四姑娘山镇（G350）', cat:'view', lng:102.93, lat:31.00, desc:'约 120km/3h，S303 弯多雨滑；抵 3200m 约定双桥沟票。'},
+      {t:'下午', name:'猫鼻梁观景台（四姑娘山全景）', cat:'view', lng:102.89, lat:31.06, desc:'拍四姑娘山全景最佳机位，路侧临时停车避让大巴。'},
+      {t:'晚', name:'四姑娘山/丹巴晚餐', cat:'food', lng:102.93, lat:31.00, desc:'山镇餐饮，提前订房（旺季紧张）。'},
+      {t:'晚', name:'住四姑娘山镇酒店', cat:'shop', lng:102.93, lat:31.00, desc:'海拔 3200m，次日进沟。'}
+    ]},
+  { day:9, date:'8/14', title:'四姑娘山双桥沟 → 成都', risk:false,
+    pois:[
+      {t:'08:00', name:'双桥沟（3200m·红杉林/布达拉峰）', cat:'view', lng:102.96, lat:31.06, desc:'最轻松的沟，观光车直达，门票¥80+观光车¥70；亲子友好无强度徒步，3~4h。'},
+      {t:'13:00', name:'返成都（G350 映秀·约211km）', cat:'shop', lng:104.0668, lat:30.5728, desc:'上午早出避午后雨，不夜路；巴朗山隧道约15.8km 易团雾开应急灯。'},
+      {t:'18:00', name:'成都餐饮 / 休整', cat:'food', lng:104.08, lat:30.66, desc:'还车前休整，准备次日返程。'}
+    ]},
+  { day:10, date:'8/15', title:'成都还车 / 飞回合肥', risk:false,
+    pois:[
+      {t:'上午', name:'成都还车（满油）', cat:'shop', lng:104.0668, lat:30.5728, desc:'还车前验车；GL8 满油还车更划算。'},
+      {t:'下午', name:'飞回合肥', cat:'shop', lng:104.0668, lat:30.5728, desc:'机票随日期浮动，提前值机。'}
+    ]}
+];
+
+/* ============================================================
+   投影 & 地图
+   ============================================================ */
+const MAP_W=900, MAP_H=640, PAD=80;
+const onMap = [];
+DAYS.forEach(d=>d.pois.forEach(p=>{ if(p.lng>=98 && p.lng<=106) onMap.push(p); }));
+
+let minLng=Infinity,maxLng=-Infinity,minLat=Infinity,maxLat=-Infinity;
+onMap.forEach(p=>{minLng=Math.min(minLng,p.lng);maxLng=Math.max(maxLng,p.lng);minLat=Math.min(minLat,p.lat);maxLat=Math.max(maxLat,p.lat);});
+
+function proj(lng,lat){
+  const sx=(MAP_W-2*PAD)/(maxLng-minLng), sy=(MAP_H-2*PAD)/(maxLat-minLat);
+  const s=Math.min(sx,sy);
+  const ox=(MAP_W-(maxLng-minLng)*s)/2, oy=(MAP_H-(maxLat-minLat)*s)/2;
+  return [ ox+(lng-minLng)*s, oy+(maxLat-lat)*s ];
+}
+onMap.forEach(p=>{ const c=proj(p.lng,p.lat); p.px=c[0]; p.py=c[1]; });
+
+const vp = document.getElementById('vp');
+function applyTransform(tx,ty,scale){
+  vp.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+}
+function fitToPoints(pts, zoom=1){
+  if(!pts.length) return;
+  let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
+  pts.forEach(p=>{x0=Math.min(x0,p.px);x1=Math.max(x1,p.px);y0=Math.min(y0,p.py);y1=Math.max(y1,p.py);});
+  const w=Math.max(x1-x0,1), h=Math.max(y1-y0,1);
+  let s=Math.min((MAP_W-2*PAD)/w,(MAP_H-2*PAD)/h)*zoom;
+  s=Math.min(Math.max(s,0.6),6);
+  const cx=(x0+x1)/2, cy=(y0+y1)/2;
+  applyTransform(MAP_W/2 - s*cx, MAP_H/2 - s*cy, s);
+}
+
+/* 导航：按精确经纬度拉起腾讯地图驾车导航 */
+function navToCoord(lat,lng,name){
+  return 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to='+lat+','+lng+':'+encodeURIComponent(name)+'&policy=0&referer=chuanxi2026';
+}
+/* 每日全程导航：from→to 均为精确坐标 */
+function dayNavUrl(day){
+  const r=DAY_ROUTES[day.day];
+  if(!r) return '#';
+  const f=r[0], t=r[1];
+  return 'https://apis.map.qq.com/uri/v1/routeplan?type=drive'
+    + '&from='+f[0]+','+f[1]+':'+encodeURIComponent(f[2])
+    + '&to='+t[0]+','+t[1]+':'+encodeURIComponent(t[2])
+    + '&policy=0&referer=chuanxi2026';
+}
+/* 天气链接：中国天气网按县名查询实时预报 */
+function weatherUrl(county){
+  return 'https://www.weather.com.cn/search?city='+encodeURIComponent(county);
+}
+
+/* 全程灰线（静态背景） */
+function drawBaseRoute(){
+  let d='';
+  DAYS.forEach(day=>{
+    const pts=day.pois.filter(p=>p.lng>=98&&p.lng<=106);
+    pts.forEach((p,i)=>{ d += (i===0?'M':'L')+p.px.toFixed(1)+' '+p.py.toFixed(1)+' '; });
+  });
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',d); path.setAttribute('fill','none');
+  path.setAttribute('stroke','#cbd5e1'); path.setAttribute('stroke-width','2.5');
+  path.setAttribute('stroke-dasharray','2 7'); path.setAttribute('stroke-linecap','round'); path.setAttribute('opacity','.7');
+  vp.appendChild(path);
+}
+
+/* 渲染某一天 */
+let curDay=0;
+function renderDay(idx){
+  curDay=idx;
+  const day=DAYS[idx];
+  document.getElementById('dTitle').textContent='Day '+day.day+' · '+day.title;
+  document.getElementById('dDate').textContent=day.date;
+  // weather (clickable link)
+  const w=WEATHER[day.day] || {e:'🌤️', t:'—', w:'成都'};
+  const wEl=document.getElementById('dWeather');
+  wEl.innerHTML='<span class="e">'+w.e+'</span><span>'+w.t+'</span>';
+  wEl.href=weatherUrl(w.w);
+  wEl.title='点击查看 '+w.w+' 实时天气';
+  // risk
+  const riskEl=document.getElementById('dRisk');
+  riskEl.style.display = day.risk?'inline-block':'none';
+  // day nav
+  document.getElementById('dNav').href = dayNavUrl(day);
+  document.getElementById('mTitle').textContent='Day '+day.day+' 路线';
+
+  // timeline
+  const tl=document.getElementById('timeline');
+  tl.innerHTML='';
+  day.pois.forEach((p,i)=>{
+    const c=CAT[p.cat];
+    const card=document.createElement('div');
+    card.className='card'; card.style.setProperty('--c',c.color);
+    card.dataset.idx=i;
+    card.innerHTML=
+      '<div class="time">'+p.t+'</div>'+
+      '<div class="body">'+
+        '<div class="name">'+p.name+' <span class="tag">'+c.label+'</span></div>'+
+        '<div class="desc">'+p.desc+'</div>'+
+        '<div class="meta">'+
+          ((p.lng>=98&&p.lng<=106) ? '<span class="pill">📌 '+p.lat.toFixed(3)+'°N, '+p.lng.toFixed(3)+'°E</span>' : '<span class="pill">✈ 飞行/城区</span>')+
+          '<a class="pin" href="'+navToCoord(p.lat,p.lng,p.name)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">🧭 导航</a>'+
+        '</div>'+
+      '</div>';
+    card.addEventListener('click',()=>flyTo(i));
+    tl.appendChild(card);
+  });
+
+  // map: 当日路线 + markers
+  while(vp.childNodes.length>1) vp.removeChild(vp.lastChild);
+
+  const pts=day.pois.filter(p=>p.lng>=98&&p.lng<=106);
+  if(pts.length){
+    let dd='';
+    pts.forEach((p,i)=>{ dd += (i===0?'M':'L')+p.px.toFixed(1)+' '+p.py.toFixed(1)+' '; });
+    const rp=document.createElementNS('http://www.w3.org/2000/svg','path');
+    rp.setAttribute('d',dd); rp.setAttribute('fill','none');
+    rp.setAttribute('stroke','url(#routeGrad)'); rp.setAttribute('stroke-width','4.5');
+    rp.setAttribute('stroke-linecap','round'); rp.setAttribute('stroke-linejoin','round');
+    rp.setAttribute('filter','url(#glow)'); rp.setAttribute('opacity','.95');
+    vp.appendChild(rp);
+  }
+  day.pois.forEach((p,i)=>{
+    if(p.lng<98||p.lng>106) return;
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.style.cursor='pointer';
+    g.addEventListener('click',()=>flyTo(i));
+    const circ=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circ.setAttribute('cx',p.px); circ.setAttribute('cy',p.py); circ.setAttribute('r','8');
+    circ.setAttribute('fill',CAT[p.cat].color); circ.setAttribute('stroke','#fff'); circ.setAttribute('stroke-width','2.5');
+    const num=document.createElementNS('http://www.w3.org/2000/svg','text');
+    num.setAttribute('x',p.px); num.setAttribute('y',p.py+4); num.setAttribute('text-anchor','middle');
+    num.setAttribute('class','mk-label'); num.setAttribute('fill','#fff'); num.setAttribute('stroke','none');
+    num.setAttribute('font-size','11'); num.textContent=(i+1);
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',p.px); t.setAttribute('y',p.py-13); t.setAttribute('text-anchor','middle');
+    t.setAttribute('class','mk-label'); t.setAttribute('font-size','11.5');
+    t.textContent=p.name.replace(/（.*?）/g,'').replace(/·.*/g,'').slice(0,8);
+    g.appendChild(circ); g.appendChild(num); g.appendChild(t);
+    vp.appendChild(g);
+  });
+
+  fitToPoints(pts, 1.05);
+  updateActiveCard();
+}
+
+function flyTo(i){
+  const day=DAYS[curDay];
+  const p=day.pois[i];
+  if(!p || p.lng<98 || p.lng>106) return;
+  const pts=day.pois.filter(q=>q.lng>=98&&q.lng<=106);
+  fitToPoints(pts, 1.05);
+  const scale=Math.min(Math.max(2.6, 6), 4.2);
+  applyTransform(MAP_W/2 - scale*p.px, MAP_H/2 - scale*p.py, scale);
+  updateActiveCard(i);
+}
+function updateActiveCard(i){
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+  if(i===undefined) return;
+  const cards=document.querySelectorAll('.card');
+  if(cards[i]) cards[i].classList.add('active');
+}
+
+/* tabs */
+function renderTabs(){
+  const tabs=document.getElementById('tabs');
+  DAYS.forEach((d,i)=>{
+    const t=document.createElement('div');
+    const label = d.day===0 ? '预备 8/5' : 'DAY'+d.day;
+    t.className='tab'+(d.risk?' risk':'')+(i===0?' active':'');
+    t.innerHTML='<span class="d">'+label+'</span><span class="dt">'+d.date+'</span>';
+    t.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      renderDay(i);
+    });
+    tabs.appendChild(t);
+  });
+}
+
+/* POI 计数 */
+let poiCount=0; DAYS.forEach(d=>poiCount+=d.pois.length);
+document.getElementById('bPoi').textContent=poiCount;
+
+/* init */
+renderTabs();
+drawBaseRoute();
+renderDay(0);
+</script>
+</body>
+</html>
